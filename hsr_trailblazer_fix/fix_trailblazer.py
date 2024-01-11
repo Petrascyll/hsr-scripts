@@ -56,28 +56,11 @@ hash_data = {
     }
 }
 
-template = {
-    'BodyIB': lambda title, hash, rest:
-        (
-            '[TextureOverride{}]\n'
-            '\thash = {}\n'
-            '{}'
-        ).format(title, hash, rest),
-    'BodyABC': lambda title, hash, first_index, rest:
-        (
-            '[TextureOverride{}]\n'
-            '\thash = {}\n'
-            '\tmatch_first_index = {}\n'
-            '{}'
-        ).format(title, hash, first_index, rest),
-    'Texcoord': lambda title, hash, rest:
-        (
-            '[TextureOverride{}]\n'
-            '\thash = {}\n'
-            '{}'
-        ).format(title, hash, rest)
-}
-
+template = lambda title, hash, rest: (
+        '[TextureOverride{}]\n'
+        '\thash = {}\n'
+        '{}'
+    ).format(title, hash, rest)
 
 
 def main():
@@ -114,16 +97,56 @@ def main():
             input()
             exit()
 
-    # Patterns
-    # the section blocks BodyA and BodyIB override can be extremely similiar
-    # and in the case of merged mods the only way we can differentiate them is by the presence of match_first_index
-    # Fix BodyA Override first then fix BodyIB override
-    section_pattern = lambda h: re.compile(r'\[.*?\s*hash\s*=\s*{}[\s\S]*?(?=\s*\[)'.format(h))
+
+    # I'm not going to remember how this regex works...
+    #
+    #
+    # \[.*?\s*hash\s*=\s*{}
+    #   Starts matching from the [ that has its immediate next line starting with our desired hash
+    #   skipping whitespaces in between 
+    #
+    # [\s\S]*?
+    #   Match all lines non greedily (i.e. match as much as required to make the pattern true)
+    #
+    # (?=\s*(?:\s*;.*\n)*\s*\[)
+    #   Positive Look Ahead: The pattern will only match if the enclosed pattern is ahead
+    #
+    #   \s*
+    #   White Space Skip
+    #
+    #   (?:\s*;.*\n)*
+    #       Non capturing group: match lines with ; (skipping whitespaces) until the end of the line
+    #       as many times as possible
+    #
+    #   \s*\[
+    #       Match until [ (and fail if it can't be reached) skipping whitespaces
+    #
+    # Rough Explanation is that the look ahead group is not allowed to match non-comment lines
+    # so if there indeed is a non-comment line, the non greedy [\s\S]*? will match it instead
+    # meaning the look ahead group will match all comment lines up to [, but not if there
+    # are non-comment lines between
+    # Example
+    #       [TextureOverride_Test]
+    #       hash = 12345678
+    #       ; comment
+    #       this = Resource_Test
+    #
+    #       ; Resources ----------
+    #
+    #       [Resource_Test]
+    #       ...
+    # Assuming I'm matching the 12345678 hash, the regex should match up to the 4th line and not any further
+    #
+    section_pattern = lambda h: re.compile(r'\[.*?\s*hash\s*=\s*{}[\s\S]*?(?=\s*(?:\s*;.*\n)*\s*\[)'.format(h))
+
 
     match = re.search(section_pattern(hash_data[char]['<1.6']['ib']), f)
     if match:
         print('Assuming both Destruction and Preservation hashes missing.')
     
+        # The section blocks BodyA and BodyIB override can be extremely similiar
+        # and in the case of merged mods the only way we can differentiate them is by the presence of match_first_index
+        # Fix BodyA Override first then fix BodyIB override
         if 'match_first_index' in match.group():
             f = fix_bodyA_override(match, f, char)
             match = re.search(section_pattern(hash_data[char]['<1.6']['ib']), f)
@@ -134,7 +157,10 @@ def main():
             f = fix_bodyA_override(match, f, char)
             
         match = re.search(section_pattern(hash_data[char]['<1.6']['texcoord_vb']), f)
-        f = fix_body_texcoord_override(match, f, char)        
+        f = fix_body_texcoord_override(match, f, char)
+
+        match = re.search(section_pattern(hash_data[char]['<1.6']['blend_vb']), f)
+        f = fix_body_blend_override(match, f, char)
     else:
         print('Unimplemented!')
         input()
@@ -167,7 +193,7 @@ def fix_bodyIB_override(match, f, char):
 
     s = ''
     for path in ['destruction', 'preservation']:
-        s += template['BodyIB'](
+        s += template(
             title=f'{char}BodyIB_{path.capitalize()}',
             hash=hash_data[char]['1.6'][path]['ib'],
             rest=rest
@@ -195,17 +221,22 @@ def fix_bodyA_override(match, f, char):
     
     s = ''
     for path in ['destruction', 'preservation']:
-        bodyA = template['BodyABC'](
+        first_index = hash_data[char]['1.6'][path]['first_index']
+        bodyA = template(
             title=f'{char}BodyA_{path.capitalize()}',
             hash=hash_data[char]['1.6'][path]['ib'],
-            first_index=hash_data[char]['1.6'][path]['first_index'][0],
-            rest='\tib = null\n'
+            rest=(
+                '\tfirst_index = {}\n'.format(first_index[0])+
+                '\tib = null\n'
+            )
         )
-        bodyB = template['BodyABC'](
+        bodyB = template(
             title=f'{char}BodyB_{path.capitalize()}',
             hash=hash_data[char]['1.6'][path]['ib'],
-            first_index=hash_data[char]['1.6'][path]['first_index'][1],
-            rest=rest
+            rest=(
+                '\tfirst_index = {}\n'.format(first_index[1])+
+                rest
+            )
         )
         s += bodyA + bodyB + '\n\n'
     print('Replacing with:')
@@ -230,7 +261,7 @@ def fix_body_texcoord_override(match, f, char):
 
         s = ''
         for path in ['destruction', 'preservation']:
-            s += template['Texcoord'](
+            s += template(
                 title=f'{char}BodyTexcoord_{path.capitalize()}',
                 hash=hash_data[char]['1.6'][path]['texcoord_vb'],
                 rest=rest
@@ -240,6 +271,34 @@ def fix_body_texcoord_override(match, f, char):
         print()
 
         return ''.join([f[:i], s, f[j:]])
+
+# These methods are very similar.....
+# Could optimize but its not bad enough to warrant it tbh so eh its readable... later
+def fix_body_blend_override(match, f, char):
+    print('Found outdated Body Blend override:')
+    lines = match.group().splitlines()
+    print('\n'.join(f'\t{l}' for l in lines))
+
+    i, j = match.span()
+    rest = '\n'.join([
+        f'\t{line}'
+        for line in lines
+        if '[' not in line
+        and 'hash' not in line
+    ])
+
+    s = ''
+    for path in ['destruction', 'preservation']:
+        s += template(
+            title=f'{char}BodyBlend_{path.capitalize()}',
+            hash=hash_data[char]['1.6'][path]['blend_vb'],
+            rest=rest
+        ) + '\n'
+    print('Replacing with:')
+    print('\n'.join(f'\t{l}' for l in s.splitlines()))
+    print()
+
+    return ''.join([f[:i], s, f[j:]])
 
 
 if __name__ == '__main__':
