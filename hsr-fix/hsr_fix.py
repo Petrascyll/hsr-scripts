@@ -45,7 +45,7 @@ def main():
 		# Change the CWD to the directory this script is in
 		# Nuitka: "Onefile: Finding files" in https://nuitka.net/doc/user-manual.pdf 
 		# I'm not using Nuitka anymore but this distinction (probably) also applies for pyinstaller
-		os.chdir(os.path.dirname(sys.argv[0]))
+		os.chdir(os.path.abspath(os.path.dirname(sys.argv[0])))
 		print('Set CWD to {}'.format(os.path.abspath('.')))
 		process_folder('.')
 
