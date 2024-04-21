@@ -1,5 +1,5 @@
 # Written by petrascyll
-# 	thanks to _sora for help collecting the vertex explosion extra position hashes
+# 	thanks to sora_ for help collecting the vertex explosion extra position hashes
 # 	and AGMG discord and everone there for being helpful
 # 
 # HSR Version 2.1 Fix
