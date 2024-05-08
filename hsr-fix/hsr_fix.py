@@ -2,9 +2,9 @@
 # 	thanks to sora_ for help collecting the vertex explosion extra position hashes
 # 	and AGMG discord and everone there for being helpful
 # 
-# HSR Version 2.1 Fix
-# 	- Updates all outdated HSR character mods from HSRv1.6 up to HSRv2.1
-# 	- Edits trailblazer mods to work on both Destruction/Preservation paths.
+# HSR Version 2.2 Fix
+# 	- Updates all outdated HSR character mods from HSRv1.6 up to HSRv2.2
+# 	- Edits Caelus mods to work on both Destruction/Preservation paths.
 # 	- Adds the extra position hash on the mods that need it.
 # 	- Applies Yanqing Boss fix on the mods that need it.
 # 
@@ -22,10 +22,10 @@ import traceback
 
 def main():
 	parser = argparse.ArgumentParser(
-		prog="HSR Fix v2.1",
+		prog="HSR Fix v2.2",
 		description=(
-			"- Updates all outdated HSR character mods from HSRv1.6 up to HSRv2.1.\n"
-			"- Edits trailblazer mods to work on both Destruction/Preservation paths.\n"
+			"- Updates all outdated HSR character mods from HSRv1.6 up to HSRv2.2.\n"
+			"- Edits Caelus mods to work on both Destruction/Preservation paths.\n"
 			"- Adds the extra position hash on the mods that need it.\n"
 			"- Applies Yanqing Boss fix on the mods that need it.\n"
 		)
@@ -45,8 +45,8 @@ def main():
 		# Change the CWD to the directory this script is in
 		# Nuitka: "Onefile: Finding files" in https://nuitka.net/doc/user-manual.pdf 
 		# I'm not using Nuitka anymore but this distinction (probably) also applies for pyinstaller
-		os.chdir(os.path.abspath(os.path.dirname(sys.argv[0])))
-		print('Set CWD to {}'.format(os.path.abspath('.')))
+		# os.chdir(os.path.abspath(os.path.dirname(sys.argv[0])))
+		print('CWD: {}'.format(os.path.abspath('.')))
 		process_folder('.')
 
 	print('Done!')
@@ -625,6 +625,19 @@ def multiply_indexed_section(*, title, hash, trg_indices, src_indices):
 
 
 hash_commands = {
+	# MARK: Acheron
+	'ca948c6c': [('info', 'v2.1 -> v2.2: Acheron HairA Diffuse Hash'),  (upgrade_hash, {'to': '5ee5cc8d'})],
+	'15cacc23': [('info', 'v2.1 -> v2.2: Acheron HairA LightMap Hash'), (upgrade_hash, {'to': 'ba560779'})],
+	'214bd15a': [
+		('info', 'v2.1: Acheron Body Position: Apply Vertex Explosion Fix'),
+		(check_hash_not_in_ini, {'hash': '7ffc98fa'}),
+		(multiply_section, {
+			'titles': ['AcheronBodyPosition', 'AcheronBodyPosition_Extra'],
+			'hashes': ['214bd15a', '7ffc98fa']
+		})
+	],
+
+
 	# MARK: Argenti
 	'099cb678': [('info', 'v1.6 -> v2.0: Argenti Body Texcoord Hash'), (upgrade_hash, {'to': '18af7e1c'})],
 	'9de080b0': [
@@ -1174,8 +1187,8 @@ hash_commands = {
 	# MARK: Sparkle
 	'28788045': [('info', 'v2.0 -> v2.1: Sparkle Body Texcoord Hash'), (upgrade_hash, {'to': 'd51f3972'})],
 	'74660eca': [('info', 'v2.0 -> v2.1: Sparkle Body IB Hash'),	   (upgrade_hash, {'to': '68121fd3'})],
-
-
+	
+	'3c22971b': [('info', 'v2.1 -> v2.2: Sparkle BodyA Diffuse Hash'), (upgrade_hash, {'to': 'fac7d488'})],
 
 
 
@@ -1578,164 +1591,38 @@ hash_commands = {
 
 
 	# MARK: Stelle
-	'01df48a6': [
-		('info', 'v1.5 -> v1.6: Body Texcoord Hash (Stelle)'),
-		(multiply_section, {
-			'titles': ['StelleBodyTexcoord_Destruction', 'StelleBodyTexcoord_Preservation'],
-			'hashes': ['a68ffeb1', '2dcd5dc0']
-		})
-	],
+	# 	Skip adding extra sections for v1.6, v2.0, v2.1 Preservation hashes
+	# 	because those extra sections are not needed in v2.2
+	# 	Remove the extra sections later via this script?
+	'01df48a6': [('info', 'v1.5 -> v1.6: Body Texcoord Hash (Stelle)'), (upgrade_hash, {'to': 'a68ffeb1'})],
 	'a68ffeb1': [
-		('info', 'v1.6: Body Texcoord Hash (Destruction Stelle)'),
-		(check_hash_not_in_ini, {'hash': '2dcd5dc0'}),
-		(multiply_section, {
-			'titles': ['StelleBodyTexcoord_Destruction', 'StelleBodyTexcoord_Preservation'],
-			'hashes': ['a68ffeb1', '2dcd5dc0']
-		})
+		('info', 'v2.1 -> v2.2: Body Texcoord Hash (Destruction Stelle)'),
+		(upgrade_hash, {'to': 'f00b6ded'})
 	],
-	'2dcd5dc0': [
-		('info', 'v1.6: Body Texcoord Hash (Preservation Stelle)'),
-		(check_hash_not_in_ini, {'hash': 'a68ffeb1'}),
-		(multiply_section, {
-			'titles': ['StelleBodyTexcoord_Destruction', 'StelleBodyTexcoord_Preservation'],
-			'hashes': ['a68ffeb1', '2dcd5dc0']
-		})
-	],
+
 	'85ad43b3': [
 		('info', 'v1.5 -> v1.6: Body IB Hash (Stelle)'),
-		(remove_indexed_sections, {'capture_content': '🍰', 'capture_position': '🌲'}),
-		(create_new_section, {
-			'at_position': '🌲',
-			'capture_position': '🌲',
-			'content': '''
-				[TextureOverrideStelleBodyIB_Destruction]
-				hash = 174a08d4
-				🍰
-
-				[TextureOverrideStelleBodyA_Destruction]
-				hash = 174a08d4
-				match_first_index = 0
-				ib = null
-
-				[TextureOverrideStelleBodyB_Destruction]
-				hash = 174a08d4
-				match_first_index = 32967
-				🤍0🤍
-
-			'''
-		}),
-		(create_new_section, {
-			'at_position': '🌲',
-			'content': '''
-				[TextureOverrideStelleBodyIB_Preservation]
-				hash = e0d86dc8
-				🍰
-
-				[TextureOverrideStelleBodyA_Preservation]
-				hash = e0d86dc8
-				match_first_index = 0
-				ib = null
-
-				[TextureOverrideStelleBodyB_Preservation]
-				hash = e0d86dc8
-				match_first_index = 33081
-				🤍0🤍
-			'''
-		}),
-		(try_upgrade, {'174a08d4', 'e0d86dc8'}),
+		(multiply_indexed_section, {
+			'title': 'StelleBody',
+			'hash': '174a08d4',
+			'trg_indices': [ '0', '32967'],
+			'src_indices': ['-1',     '0'],
+		})
 	],
-
-	# Add Preservation Path hashes if its missing
 	'174a08d4': [
-		('info', 'v1.6: Body IB Hash (Stelle Destruction)'),
-		(check_hash_not_in_ini, {'hash': 'e0d86dc8'}),
-		(remove_indexed_sections, {'capture_content': '🍰', 'capture_position': '🌲'}),
-		(create_new_section, {
-			'at_position': '🌲',
-			'capture_position': '🌲',
-			'content': '''
-				[TextureOverrideStelleBodyIB_Destruction]
-				hash = 174a08d4
-				🍰
-
-				[TextureOverrideStelleBodyA_Destruction]
-				hash = 174a08d4
-				match_first_index = 0
-				🤍0🤍
-
-				[TextureOverrideStelleBodyB_Destruction]
-				hash = 174a08d4
-				match_first_index = 32967
-				🤍32967🤍
-
-			'''
-		}),
-		(create_new_section, {
-			'at_position': '🌲',
-			'content': '''
-				[TextureOverrideStelleBodyIB_Preservation]
-				hash = e0d86dc8
-				🍰
-
-				[TextureOverrideStelleBodyA_Preservation]
-				hash = e0d86dc8
-				match_first_index = 0
-				🤍0🤍
-
-				[TextureOverrideStelleBodyB_Preservation]
-				hash = e0d86dc8
-				match_first_index = 33081
-				🤍32967🤍
-			'''
-		}),
-		(try_upgrade, {'e0d86dc8'}),
+		('info', 'v2.1 -> v2.2: Body IB Hash (Destruction Stelle)'),
+		(multiply_indexed_section, {
+			'title': 'StelleBody',
+			'hash': 'fba309df',
+			'trg_indices': ['0', '32946'],
+			'src_indices': ['0', '32967'],
+		})
 	],
 
-	# Add Destruction Path hashes if its missing
-	'e0d86dc8': [
-		('info', 'v1.6: Body IB Hash (Stelle Preservation)'),
-		(check_hash_not_in_ini, {'hash': '174a08d4'}),
-		(remove_indexed_sections, {'capture_content': '🍰', 'capture_position': '🌲'}),
-		(create_new_section, {
-			'at_position': '🌲',
-			'capture_position': '🌲',
-			'content': '''
-				[TextureOverrideStelleBodyIB_Destruction]
-				hash = 174a08d4
-				🍰
-
-				[TextureOverrideStelleBodyA_Destruction]
-				hash = 174a08d4
-				match_first_index = 0
-				🤍0🤍
-
-				[TextureOverrideStelleBodyB_Destruction]
-				hash = 174a08d4
-				match_first_index = 32967
-				🤍33081🤍
-
-			'''
-		}),
-		(create_new_section, {
-			'at_position': '🌲',
-			'content': '''
-				[TextureOverrideStelleBodyIB_Preservation]
-				hash = e0d86dc8
-				🍰
-
-				[TextureOverrideStelleBodyA_Preservation]
-				hash = e0d86dc8
-				match_first_index = 0
-				🤍0🤍
-
-				[TextureOverrideStelleBodyB_Preservation]
-				hash = e0d86dc8
-				match_first_index = 33081
-				🤍33081🤍
-			'''
-		}),
-		(try_upgrade, {'174a08d4'}),
-	],
+	'1a415a73': [('info', 'v2.1 -> v2.2: Stelle Hair Draw Hash'),	  (upgrade_hash, {'to': '00d0c31d'})],
+	'938b9c8f': [('info', 'v2.1 -> v2.2: Stelle Hair Position Hash'), (upgrade_hash, {'to': '8c0c078f'})],
+	'8680469b': [('info', 'v2.1 -> v2.2: Stelle Hair Texcoord Hash'), (upgrade_hash, {'to': 'fe9eaef0'})],
+	'2d9adf2d': [('info', 'v2.1 -> v2.2: Stelle Hair IB Hash'), 	  (upgrade_hash, {'to': '1d62eafb'})],
 }
 
 # MARK: RUN
