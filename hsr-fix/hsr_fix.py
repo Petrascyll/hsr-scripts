@@ -323,6 +323,23 @@ def get_critical_content(section):
 	return '\n'.join(critical_lines), hash, match_first_index
 
 @Command
+def comment_sections(ini_content, hash, jail):
+	pattern = get_section_hash_pattern(hash)
+	new_ini_content = ''   # ini with all matching sections commented
+
+	prev_j = 0
+	section_matches = pattern.finditer(ini_content + '\n[')
+	for section_match in section_matches:
+		i, j = section_match.span(1)
+		commented_section = '\n'.join([';' + line for line in section_match.group(1).splitlines()])
+
+		new_ini_content += ini_content[prev_j:i] + commented_section
+		prev_j = j
+	
+	new_ini_content += ini_content[prev_j:]
+	return new_ini_content, jail
+
+@Command
 def remove_section(ini_content, hash, jail, *, capture_content=None, capture_position=None):
 	pattern = get_section_hash_pattern(hash)
 	section_match = pattern.search(ini_content + '\n[')
@@ -1435,7 +1452,7 @@ hash_commands = {
 		})
 	],
 	'97c34928': [
-		('info', 'v1.6: Body Texcoord Hash (Destruction Caelus)'),
+		('info', 'v2.2: Body Texcoord Hash (Destruction Caelus)'),
 		(check_hash_not_in_ini, {'hash': '44da446d'}),
 		(multiply_section, {
 			'titles': ['CaelusBodyTexcoord_Destruction', 'CaelusBodyTexcoord_Preservation'],
@@ -1443,13 +1460,22 @@ hash_commands = {
 		})
 	],
 	'44da446d': [
-		('info', 'v1.6: Body Texcoord Hash (Preservation Caelus)'),
-		(check_hash_not_in_ini, {'hash': '97c34928'}),
+		('info', 'v2.2: Body Texcoord Hash (Preservation Caelus)'),
+		(check_hash_not_in_ini, {'hash': '77933d6e'}),
 		(multiply_section, {
-			'titles': ['CaelusBodyTexcoord_Destruction', 'CaelusBodyTexcoord_Preservation'],
-			'hashes': ['97c34928', '44da446d']
+			'titles': ['CaelusBodyTexcoord_Preservation', 'CaelusBodyTexcoord_Harmony'],
+			'hashes': ['44da446d', '77933d6e']
 		})
 	],
+	'77933d6e': [
+		('info', 'v2.2: Body Texcoord Hash (Harmony Caelus)'),
+		(check_hash_not_in_ini, {'hash': '97c34928'}),
+		(multiply_section, {
+			'titles': ['CaelusBodyTexcoord_Harmony', 'CaelusBodyTexcoord_Destruction'],
+			'hashes': ['77933d6e', '97c34928']
+		})
+	],
+
 	'fd65164c': [
 		('info', 'v1.5 -> v1.6: Body IB Hash (Caelus)'),
 		# see above comment :teriderp:
@@ -1497,9 +1523,9 @@ hash_commands = {
 		(try_upgrade, {'e3ffef9a', 'a270e292'}),
 	],
 
-	# Add Preservation Path hashes if its missing
+	# From Destruction hash: Add Preservation Path hashes if its missing
 	'e3ffef9a': [
-		('info', 'v1.6: Body IB Hash (Caelus Destruction)'),
+		('info', 'v2.2: Body IB Hash (Caelus Destruction)'),
 		(check_hash_not_in_ini, {'hash': 'a270e292'}),
 		(remove_indexed_sections, {'capture_content': '🍰', 'capture_position': '🌲'}),
 		(create_new_section, {
@@ -1543,31 +1569,11 @@ hash_commands = {
 		(try_upgrade, {'a270e292'}),
 	],
 
-	# Add Destruction Path hashes if its missing
+	# From Preservation hash: Add Harmony Path hashes if its missing
 	'a270e292': [
-		('info', 'v1.6: Body IB Hash (Caelus Preservation)'),
-		(check_hash_not_in_ini, {'hash': 'e3ffef9a'}),
+		('info', 'v2.2: Body IB Hash (Caelus Preservation)'),
+		(check_hash_not_in_ini, {'hash': '89fcb592'}),
 		(remove_indexed_sections, {'capture_content': '🍰', 'capture_position': '🌲'}),
-		(create_new_section, {
-			'at_position': '🌲',
-			'capture_position': '🌲',
-			'content': '''
-				[TextureOverrideCaelusBodyIB_Destruction]
-				hash = e3ffef9a
-				🍰
-
-				[TextureOverrideCaelusBodyA_Destruction]
-				hash = e3ffef9a
-				match_first_index = 0
-				🤍0🤍
-
-				[TextureOverrideCaelusBodyB_Destruction]
-				hash = e3ffef9a
-				match_first_index = 38178
-				🤍37674🤍
-
-			'''
-		}),
 		(create_new_section, {
 			'at_position': '🌲',
 			'content': '''
@@ -1584,6 +1590,72 @@ hash_commands = {
 				hash = a270e292
 				match_first_index = 37674
 				🤍37674🤍
+
+			'''
+		}),
+		(create_new_section, {
+			'at_position': '🌲',
+			'capture_position': '🌲',
+			'content': '''
+				[TextureOverrideCaelusBodyIB_Harmony]
+				hash = 89fcb592
+				🍰
+
+				[TextureOverrideCaelusBodyA_Harmony]
+				hash = 89fcb592
+				match_first_index = 0
+				🤍0🤍
+
+				[TextureOverrideCaelusBodyB_Harmony]
+				hash = 89fcb592
+				match_first_index = 39330
+				🤍37674🤍
+			'''
+		}),
+		(try_upgrade, {'89fcb592'}),
+	],
+
+	# From Harmony hash: Add Destruction Path hashes if its missing
+	'89fcb592': [
+		('info', 'v2.2: Body IB Hash (Caelus Preservation)'),
+		(check_hash_not_in_ini, {'hash': 'e3ffef9a'}),
+		(remove_indexed_sections, {'capture_content': '🍰', 'capture_position': '🌲'}),
+		(create_new_section, {
+			'at_position': '🌲',
+			'capture_position': '🌲',
+			'content': '''
+				[TextureOverrideCaelusBodyIB_Harmony]
+				hash = 89fcb592
+				🍰
+
+				[TextureOverrideCaelusBodyA_Harmony]
+				hash = 89fcb592
+				match_first_index = 0
+				🤍0🤍
+
+				[TextureOverrideCaelusBodyB_Harmony]
+				hash = 89fcb592
+				match_first_index = 39330
+				🤍39330🤍
+
+			'''
+		}),
+		(create_new_section, {
+			'at_position': '🌲',
+			'content': '''
+				[TextureOverrideCaelusBodyIB_Destruction]
+				hash = e3ffef9a
+				🍰
+
+				[TextureOverrideCaelusBodyA_Destruction]
+				hash = e3ffef9a
+				match_first_index = 0
+				🤍0🤍
+
+				[TextureOverrideCaelusBodyB_Destruction]
+				hash = e3ffef9a
+				match_first_index = 38178
+				🤍39330🤍
 			'''
 		}),
 		(try_upgrade, {'e3ffef9a'}),
@@ -1593,7 +1665,7 @@ hash_commands = {
 	# MARK: Stelle
 	# 	Skip adding extra sections for v1.6, v2.0, v2.1 Preservation hashes
 	# 	because those extra sections are not needed in v2.2
-	# 	Remove the extra sections later via this script?
+	# 	Comment out the extra sections later
 	'01df48a6': [('info', 'v1.5 -> v1.6: Body Texcoord Hash (Stelle)'), (upgrade_hash, {'to': 'a68ffeb1'})],
 	'a68ffeb1': [
 		('info', 'v2.1 -> v2.2: Body Texcoord Hash (Destruction Stelle)'),
@@ -1623,6 +1695,10 @@ hash_commands = {
 	'938b9c8f': [('info', 'v2.1 -> v2.2: Stelle Hair Position Hash'), (upgrade_hash, {'to': '8c0c078f'})],
 	'8680469b': [('info', 'v2.1 -> v2.2: Stelle Hair Texcoord Hash'), (upgrade_hash, {'to': 'fe9eaef0'})],
 	'2d9adf2d': [('info', 'v2.1 -> v2.2: Stelle Hair IB Hash'), 	  (upgrade_hash, {'to': '1d62eafb'})],
+
+	# Comment out the sections with hashes no longer used in v2.2
+	'2dcd5dc0': [('info', 'v2.1: Comment Body Texcoord Hash (Preservation Stelle)'), (comment_sections, {})],
+	'e0d86dc8': [('info', 'v2.1: Comment Body IB Hash (Preservation Stelle)'),		 (comment_sections, {})],
 }
 
 # MARK: RUN
