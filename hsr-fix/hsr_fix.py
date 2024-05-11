@@ -728,7 +728,6 @@ hash_commands = {
 	'b95b80ad': [('info', 'v1.5 -> v1.6: Blade BodyA LightMap Hash'), (upgrade_hash, {'to': '459ea4f3'})],
 	'0b7675c2': [('info', 'v1.5 -> v1.6: Blade BodyB LightMap Hash'), (upgrade_hash, {'to': 'bdbde74c'})],
 	'90237dd2': [('info', 'v1.6 -> v2.0: Blade Head Position Hash'),  (upgrade_hash, {'to': '9bc595ba'})],
-	'7976e48f': [('info', 'v1.6 -> v2.0: Blade HeadA Diffuse Hash'),  (upgrade_hash, {'to': '6fa7fbdc'})],
 	'b931dfc7': [('info', 'v1.6 -> v2.0: Blade Body Texcoord Hash'),  (upgrade_hash, {'to': 'f7896b3e'})],
 	'5d03ae61': [
 		('info', 'v1.6 -> v2.0: Blade Body IB Hash'),
