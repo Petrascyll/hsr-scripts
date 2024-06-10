@@ -800,7 +800,8 @@ hash_commands = {
 	],
 
 	# MARK: DanHengIL
-	'0ffb8233': [('info', 'v1.6 -> v2.0: DanHengIL Body Texcoord Hash'), (upgrade_hash, {'to': '0f8da6ba'})],
+	'9249f149': [('info', 'v1.4 -> v1.6: DanHengIL BodyA LightMap Hash'), (upgrade_hash, {'to': 'ef65d29c'})],
+	'0ffb8233': [('info', 'v1.6 -> v2.0: DanHengIL Body Texcoord Hash'),  (upgrade_hash, {'to': '0f8da6ba'})],
 	'1a7ee87c': [
 		('info', 'v1.6 -> v2.0: DanHengIL Body IB Hash'),
 		(multiply_indexed_section, {
@@ -903,7 +904,7 @@ hash_commands = {
 			'title': 'HertaBody',
 			'hash': '9553ff35',
 			'trg_indices': ['0',  '8814', '53166'],
-			'src_indices': ['0', '52458',    '-1'],
+			'src_indices': ['0',    '-1', '52458'],
 		})
 	],
 
@@ -957,7 +958,9 @@ hash_commands = {
 	],
 
 	# MARK: Jingliu
-	'81c023e7': [('info', 'v1.6 -> v2.0: Jingliu Body Texcoord Hash'), (upgrade_hash, {'to': 'ba517fa0'})],
+	'33f9fe71': [('info', 'v1.4 -> v1.6: Jingliu BodyA Diffuse Hash'),  (upgrade_hash, {'to': 'bdbc6dce'})],
+	'67344bd9': [('info', 'v1.4 -> v1.6: Jingliu BodyA LightMap Hash'), (upgrade_hash, {'to': '5f55eaff'})],
+	'81c023e7': [('info', 'v1.6 -> v2.0: Jingliu Body Texcoord Hash'),  (upgrade_hash, {'to': 'ba517fa0'})],
 	'5564183c': [
 		('info', 'v1.6 -> v2.0: Jingliu Body IB Hash'),
 		(multiply_indexed_section, {
