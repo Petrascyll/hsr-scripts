@@ -1,9 +1,10 @@
 # Written by petrascyll
+#   thanks to zlevir for help dumping and adding fixes during 2.3
 # 	thanks to sora_ for help collecting the vertex explosion extra position hashes
 # 	and AGMG discord and everone there for being helpful
 # 
-# HSR Version 2.2 Fix
-# 	- Updates all outdated HSR character mods from HSRv1.6 up to HSRv2.2
+# HSR Version 2.3 Fix
+# 	- Updates all outdated HSR character mods from HSRv1.6 up to HSRv2.3
 # 	- Edits Caelus mods to work on both Destruction/Preservation paths.
 # 	- Adds the extra position hash on the mods that need it.
 # 	- Applies Yanqing Boss fix on the mods that need it.
@@ -22,9 +23,9 @@ import traceback
 
 def main():
 	parser = argparse.ArgumentParser(
-		prog="HSR Fix v2.2",
+		prog="HSR Fix v2.3",
 		description=(
-			"- Updates all outdated HSR character mods from HSRv1.6 up to HSRv2.2.\n"
+			"- Updates all outdated HSR character mods from HSRv1.6 up to HSRv2.3.\n"
 			"- Edits Caelus mods to work on both Destruction/Preservation paths.\n"
 			"- Adds the extra position hash on the mods that need it.\n"
 			"- Applies Yanqing Boss fix on the mods that need it.\n"
@@ -541,6 +542,11 @@ def check_hash_not_in_ini(ini: Ini, *, hash):
 		(hash not in ini.done_hashes)
 	)
 
+# @Ini_Check
+# def check_main_ib_in_ini(ini: Ini, *, hash):
+
+
+
 @Hash_Generator
 def try_upgrade():
 	pass
@@ -654,6 +660,25 @@ hash_commands = {
 		})
 	],
 
+	'18425cc1': [('info', 'v2.2 -> v2.3: Acheron Hair Draw Hash'),         (upgrade_hash, {'to': '111d47a6'})],
+	'e775bf51': [('info', 'v2.2 -> v2.3: Acheron Hair Position Hash'),     (upgrade_hash, {'to': '9745dc50'})],
+	'f83652e0': [('info', 'v2.2 -> v2.3: Acheron Hair Texcoord Hash'),     (upgrade_hash, {'to': '439a6fd7'})],
+	'cb7fd896': [('info', 'v2.2 -> v2.3: Acheron Hair IB Hash'),           (upgrade_hash, {'to': '22284dcd'})],
+	'5ee5cc8d': [('info', 'v2.2 -> v2.3: Acheron Hair Diffuse Hash'),      (upgrade_hash, {'to': '6288c7ce'})],
+	'e341feb3': [('info', 'v2.2 -> v2.3: Acheron Hair Diffuse Ult Hash'),  (upgrade_hash, {'to': 'fbc56473'})],
+	'ba560779': [('info', 'v2.2 -> v2.3: Acheron Hair LightMap Hash'),     (upgrade_hash, {'to': '020bb63f'})],
+	'4f794c53': [('info', 'v2.2 -> v2.3: Acheron Hair LightMap Ult Hash'), (upgrade_hash, {'to': 'f0b6c0a5'})],
+
+	'94d0ebac': [('info', 'v2.2 -> v2.3: Acheron Head Diffuse Hash'),      (upgrade_hash, {'to': '772da571'})],
+	'f1d40d3b': [('info', 'v2.2 -> v2.3: Acheron Head Diffuse Ult Hash'),  (upgrade_hash, {'to': '19de522c'})],
+
+	'95311311': [('info', 'v2.2 -> v2.3: Acheron Body Texcoord Hash'),     (upgrade_hash, {'to': '17e76a6a'})],
+	'b2c64915': [('info', 'v2.2 -> v2.3: Acheron Body Diffuse Hash'),      (upgrade_hash, {'to': 'e88da4d0'})],
+	'b8363627': [('info', 'v2.2 -> v2.3: Acheron Body Diffuse Ult Hash'),  (upgrade_hash, {'to': '5788d426'})],
+	'2a42c5e4': [('info', 'v2.2 -> v2.3: Acheron Body LightMap Hash'),     (upgrade_hash, {'to': '1248799e'})],
+	'60de0907': [('info', 'v2.2 -> v2.3: Acheron Body LightMap Ult Hash'), (upgrade_hash, {'to': 'ec57d1b8'})],
+
+
 
 	# MARK: Argenti
 	'099cb678': [('info', 'v1.6 -> v2.0: Argenti Body Texcoord Hash'), (upgrade_hash, {'to': '18af7e1c'})],
@@ -666,6 +691,20 @@ hash_commands = {
 			'src_indices': ['0',    '-1'],
 		})
 	],
+
+	'040c8f95': [('info', 'v2.2 -> v2.3: Argenti Hair Draw Hash'),     (upgrade_hash, {'to': 'ac883ae6'})],
+	'3214c162': [('info', 'v2.2 -> v2.3: Argenti Hair Position Hash'), (upgrade_hash, {'to': '78c72ec8'})],
+	'5eede219': [('info', 'v2.2 -> v2.3: Argenti Hair Texcoord Hash'), (upgrade_hash, {'to': '05b75400'})],
+	'179d17fe': [('info', 'v2.2 -> v2.3: Argenti Hair IB Hash'),       (upgrade_hash, {'to': '5fab0ace'})],
+	'd066d8b7': [('info', 'v2.2 -> v2.3: Argenti Hair Diffuse Hash'),  (upgrade_hash, {'to': '17948e68'})],
+	'4925c9dd': [('info', 'v2.2 -> v2.3: Argenti Hair LightMap Hash'), (upgrade_hash, {'to': 'a13c6f7f'})],
+
+	'705196e4': [('info', 'v2.2 -> v2.3: Argenti Head Diffuse Hash'),  (upgrade_hash, {'to': '2945bd23'})],
+
+	'f94c8a7e': [('info', 'v2.2 -> v2.3: Argenti Body Diffuse Hash'),  (upgrade_hash, {'to': 'a4e4c7dc'})],
+	'98b6f3be': [('info', 'v2.2 -> v2.3: Argenti Body LightMap Hash'), (upgrade_hash, {'to': '63bb1f26'})],
+
+
 
 	# MARK: Arlan
 	'efc1554c': [('info', 'v1.6 -> v2.0: Arlan BodyA LightMap Hash'), (upgrade_hash, {'to': '49f0a509'})],
@@ -681,6 +720,18 @@ hash_commands = {
 		})
 	],
 
+	'21c2354a': [('info', 'v2.2 -> v2.3: Arlan Hair Diffuse Hash'),   (upgrade_hash, {'to': '72ad2a8b'})],
+	'1fdfbbdc': [('info', 'v2.2 -> v2.3: Arlan Hair Lightmap Hash'),  (upgrade_hash, {'to': 'b4c6e6a0'})],
+
+	'9a85af8a': [('info', 'v2.2 -> v2.3: Arlan Head Diffuse Hash'),   (upgrade_hash, {'to': 'a8c57de3'})],
+
+	'52e4750b': [('info', 'v2.2 -> v2.3: Arlan BodyA Diffuse Hash'),  (upgrade_hash, {'to': '52b88238'})],
+	'49f0a509': [('info', 'v2.2 -> v2.3: Arlan BodyA LightMap Hash'), (upgrade_hash, {'to': 'd8039952'})],
+	'd1e827e0': [('info', 'v2.2 -> v2.3: Arlan BodyB Diffuse Hash'),  (upgrade_hash, {'to': 'f90343fb'})],
+	'ffaf499a': [('info', 'v2.2 -> v2.3: Arlan BodyB LightMap Hash'), (upgrade_hash, {'to': '2f5ce8b7'})],
+
+
+
 	# MARK: Asta
 	'46c9c299': [('info', 'v1.6 -> v2.0: Asta Body Texcoord Hash'), (upgrade_hash, {'to': '337e94ce'})],
 	'099dd85b': [
@@ -692,6 +743,37 @@ hash_commands = {
 			'src_indices': ['0', '40161', '49917',    '-1',    '-1'],
 		})
 	],
+
+	'cde8d751': [('info', 'v2.2 -> v2.3: Asta Hair Draw Hash'),     (upgrade_hash, {'to': '1ca6cf3d'})],
+	'4e29dad2': [('info', 'v2.2 -> v2.3: Asta Hair Position Hash'), (upgrade_hash, {'to': '967c0759'})],
+	'6406c03e': [('info', 'v2.2 -> v2.3: Asta Hair Texcoord Hash'), (upgrade_hash, {'to': '4f796933'})],
+	'84668635': [('info', 'v2.2 -> v2.3: Asta Hair IB Hash'),       (upgrade_hash, {'to': '36a13222'})],
+	'9bd1710d': [('info', 'v2.2 -> v2.3: Asta Hair Diffuse Hash'),  (upgrade_hash, {'to': '2ec320aa'})],
+	'8206809f': [('info', 'v2.2 -> v2.3: Asta Hair LightMap Hash'), (upgrade_hash, {'to': '7fd9c40d'})],
+
+	'0fb34dc9': [('info', 'v2.2 -> v2.3: Asta Head Diffuse Hash'),  (upgrade_hash, {'to': 'a53efe63'})],
+
+	'fb0f55f4': [('info', 'v2.2 -> v2.3: Asta BodyA Diffuse Hash'),  (upgrade_hash, {'to': 'e290fff3'})],
+	'088765db': [('info', 'v2.2 -> v2.3: Asta BodyA LightMap Hash'), (upgrade_hash, {'to': '687428e3'})],
+	'3cc949c8': [('info', 'v2.2 -> v2.3: Asta BodyB Diffuse Hash'),  (upgrade_hash, {'to': '8f61660a'})],
+	'701d9092': [('info', 'v2.2 -> v2.3: Asta BodyB LightMap Hash'), (upgrade_hash, {'to': '8893d921'})],
+
+
+	# MARK: Aventurine
+	'c4c588df': [('info', 'v2.2 -> v2.3: Aventurine Hair Draw Hash'),     (upgrade_hash, {'to': '2a1a1775'})],
+	'015c8a86': [('info', 'v2.2 -> v2.3: Aventurine Hair Position Hash'), (upgrade_hash, {'to': '8de65cb9'})],
+	'811fa2ca': [('info', 'v2.2 -> v2.3: Aventurine Hair Texcoord Hash'), (upgrade_hash, {'to': '32da43dd'})],
+	'015f4887': [('info', 'v2.2 -> v2.3: Aventurine Hair IB Hash'),       (upgrade_hash, {'to': '59d6021b'})],
+	'7f4af1d5': [('info', 'v2.2 -> v2.3: Aventurine Hair Diffuse Hash'),  (upgrade_hash, {'to': '7e21ce24'})],
+	'3bbbdfcc': [('info', 'v2.2 -> v2.3: Aventurine Hair LightMap Hash'), (upgrade_hash, {'to': '4699613b'})],
+
+	'c484fc3a': [('info', 'v2.2 -> v2.3: Aventurine Head Diffuse Hash'),  (upgrade_hash, {'to': 'd4874355'})],
+
+	'982bd8c4': [('info', 'v2.2 -> v2.3: Aventurine Hair Texcoord Hash'), (upgrade_hash, {'to': '53bdb739'})],
+	'53c4098f': [('info', 'v2.2 -> v2.3: Aventurine Hair Diffuse Hash'),  (upgrade_hash, {'to': 'b1cd8482'})],
+	'6c801b21': [('info', 'v2.2 -> v2.3: Aventurine Hair LightMap Hash'), (upgrade_hash, {'to': '115d50a7'})],
+
+
 
 	# MARK: Bailu
 	'e5417fe2': [('info', 'v1.6 -> v2.0: Bailu Body Texcoord Hash'), (upgrade_hash, {'to': 'd7a8228a'})],
@@ -713,6 +795,19 @@ hash_commands = {
 		})
 	],
 
+	'd1df61ab': [('info', 'v2.2 -> v2.3: Bailu Hair Diffuse Hash'),   (upgrade_hash, {'to': '1a6134dc'})],
+	'dfe514d8': [('info', 'v2.2 -> v2.3: Bailu Hair LightMap Hash'),  (upgrade_hash, {'to': 'dcc96667'})],
+
+	'52a50074': [('info', 'v2.2 -> v2.3: Bailu Head Diffuse Hash'),   (upgrade_hash, {'to': '75770ba0'})],
+	
+	'e3ea3823': [('info', 'v2.2 -> v2.3: Bailu BodyA Diffuse Hash'),  (upgrade_hash, {'to': 'e430e059'})],
+	'74d8fa7a': [('info', 'v2.2 -> v2.3: Bailu BodyA LightMap Hash'), (upgrade_hash, {'to': 'c42c0455'})],
+	'de6e235f': [('info', 'v2.2 -> v2.3: Bailu BodyB Diffuse Hash'),  (upgrade_hash, {'to': 'e468513a'})],
+	'bdab2370': [('info', 'v2.2 -> v2.3: Bailu BodyB LightMap Hash'), (upgrade_hash, {'to': '8d372ffc'})],
+
+
+
+
 	# MARK: BlackSwan
 	'96f25869': [('info', 'v2.0 -> v2.1: BlackSwan Body Texcoord Hash'), (upgrade_hash, {'to': '562fbdb4'})],
 	'197e8353': [
@@ -724,10 +819,24 @@ hash_commands = {
 		})
 	],
 
+	'5d782765': [('info', 'v2.2 -> v2.3: BlackSwan Hair Diffuse Hash'),     (upgrade_hash, {'to': '9f71dd91'})],
+	'4013a662': [('info', 'v2.2 -> v2.3: BlackSwan Hair LightMap Hash'),    (upgrade_hash, {'to': 'b97825d7'})],
+
+	'057dfd1a': [('info', 'v2.2 -> v2.3: BlackSwan Head Diffuse Hash'),     (upgrade_hash, {'to': '7464fbfe'})],
+	
+	'4ce38332': [('info', 'v2.2 -> v2.3: BlackSwan Body Diffuse Hash'),     (upgrade_hash, {'to': 'a5727e55'})],
+	'5527e772': [('info', 'v2.2 -> v2.3: BlackSwan Body LightMap Hash'),    (upgrade_hash, {'to': '7884691d'})],
+	'028b385d': [('info', 'v2.2 -> v2.3: BlackSwan Body StockingMap Hash'), (upgrade_hash, {'to': 'ec1ba003'})],
+
+
+
 	# MARK: Blade
 	'b95b80ad': [('info', 'v1.5 -> v1.6: Blade BodyA LightMap Hash'), (upgrade_hash, {'to': '459ea4f3'})],
 	'0b7675c2': [('info', 'v1.5 -> v1.6: Blade BodyB LightMap Hash'), (upgrade_hash, {'to': 'bdbde74c'})],
-	'90237dd2': [('info', 'v1.6 -> v2.0: Blade Head Position Hash'),  (upgrade_hash, {'to': '9bc595ba'})],
+	
+	# This is reverted in 2.3? Extremely weird, investigate later
+	# '90237dd2': [('info', 'v1.6 -> v2.0: Blade Head Position Hash'),  (upgrade_hash, {'to': '9bc595ba'})],
+
 	'b931dfc7': [('info', 'v1.6 -> v2.0: Blade Body Texcoord Hash'),  (upgrade_hash, {'to': 'f7896b3e'})],
 	'5d03ae61': [
 		('info', 'v1.6 -> v2.0: Blade Body IB Hash'),
@@ -738,6 +847,38 @@ hash_commands = {
 			'src_indices': ['0', '35790',    '-1'],
 		})
 	],
+
+	'419db05a': [('info', 'v2.2 -> v2.3: Blade Hair Draw Hash'),     (upgrade_hash, {'to': '89af9f25'})],
+	'71b698d8': [('info', 'v2.2 -> v2.3: Blade Hair Position Hash'), (upgrade_hash, {'to': 'dd309961'})],
+	'ff18d193': [('info', 'v2.2 -> v2.3: Blade Hair Texcoord Hash'), (upgrade_hash, {'to': 'f646a974'})],
+	'60d6a2c4': [('info', 'v2.2 -> v2.3: Blade Hair IB Hash'),       (upgrade_hash, {'to': 'ab8b5a42'})],
+	'7e354cb4': [('info', 'v2.2 -> v2.3: Blade Hair Diffuse Hash'),  (upgrade_hash, {'to': '7cbac9fe'})],
+	'32919d62': [('info', 'v2.2 -> v2.3: Blade Hair LightMap Hash'), (upgrade_hash, {'to': 'bc05281a'})],
+
+	'9bc595ba': [('info', 'v2.2 -> v2.3: Blade Head Position Hash'), (upgrade_hash, {'to': '90237dd2'})],
+	'6fa7fbdc': [('info', 'v2.2 -> v2.3: Blade Head Diffuse Hash'),  (upgrade_hash, {'to': '929dfaee'})],
+
+	'1082d394': [('info', 'v2.2 -> v2.3: Blade BodyA Diffuse Hash'),  (upgrade_hash, {'to': '6166ea57'})],
+	'459ea4f3': [('info', 'v2.2 -> v2.3: Blade BodyA LightMap Hash'), (upgrade_hash, {'to': 'a273cfa3'})],
+	'409cd5c1': [('info', 'v2.2 -> v2.3: Blade BodyB Diffuse Hash'),  (upgrade_hash, {'to': '3a1b9bb1'})],
+	'bdbde74c': [('info', 'v2.2 -> v2.3: Blade BodyB LightMap Hash'), (upgrade_hash, {'to': '647809bd'})],
+
+
+
+	# MARK: Boothill
+	'1e9505b5': [('info', 'v2.2 -> v2.3: Boothill Hair Diffuse Hash'),   (upgrade_hash, {'to': '3b420073'})],
+	'8dccfaa1': [('info', 'v2.2 -> v2.3: Boothill Hair LightMap Hash'),  (upgrade_hash, {'to': 'af56a76b'})],
+
+	'4e49ef76': [('info', 'v2.2 -> v2.3: Boothill Head Diffuse Hash'),   (upgrade_hash, {'to': '704d65a9'})],
+ 
+ 	'845f6f6b': [('info', 'v2.2 -> v2.3: Boothill Draw Hash'),           (upgrade_hash, {'to': 'f261312e'})],
+ 	'37a8d30b': [('info', 'v2.2 -> v2.3: Boothill Position Hash'),       (upgrade_hash, {'to': '41968d4e'})],
+ 	'd0fb7df5': [('info', 'v2.2 -> v2.3: Boothill Texcoord Hash'),       (upgrade_hash, {'to': 'f8dd7e43'})],
+ 	'87f245a6': [('info', 'v2.2 -> v2.3: Boothill IB Hash'),             (upgrade_hash, {'to': '3c3ec92a'})],
+ 	'6d0a3848': [('info', 'v2.2 -> v2.3: Boothill BodyA Diffuse Hash'),  (upgrade_hash, {'to': 'bd451832'})],
+	'f914a7fe': [('info', 'v2.2 -> v2.3: Boothill BodyA LightMap Hash'), (upgrade_hash, {'to': 'f36e4a49'})],
+
+
 
 	# MARK: Bronya
 	'f25b360a': [('info', 'v1.5 -> v1.6: Bronya BodyA LightMap Hash'), (upgrade_hash, {'to': '066f1a5a'})],
@@ -765,6 +906,19 @@ hash_commands = {
 		})
 	],
 
+	'79319861': [('info', 'v2.2 -> v2.3: Bronya Hair Diffuse Hash'),      (upgrade_hash, {'to': '7e9a40be'})],
+	'c476c030': [('info', 'v2.2 -> v2.3: Bronya Hair LightMap Hash'),     (upgrade_hash, {'to': 'af5183a6'})],
+
+	'901262ce': [('info', 'v2.2 -> v2.3: Bronya Head Diffuse Hash'),      (upgrade_hash, {'to': 'eea06253'})],
+
+	'0b49e488': [('info', 'v2.2 -> v2.3: Bronya BodyA Diffuse Hash'),     (upgrade_hash, {'to': '3ed22aab'})],
+	'066f1a5a': [('info', 'v2.2 -> v2.3: Bronya BodyA LightMap Hash'),    (upgrade_hash, {'to': 'b1117be0'})],
+	'ac738042': [('info', 'v2.2 -> v2.3: Bronya BodyA StockingMap Hash'), (upgrade_hash, {'to': '45480a99'})],
+	'e1c9d15e': [('info', 'v2.2 -> v2.3: Bronya BodyC Diffuse Hash'),     (upgrade_hash, {'to': 'da221a45'})],
+	'5161422e': [('info', 'v2.2 -> v2.3: Bronya BodyC LightMap Hash'),    (upgrade_hash, {'to': '643fe76a'})],
+	'720783d5': [('info', 'v2.2 -> v2.3: Bronya BodyC StockingMap Hash'), (upgrade_hash, {'to': '789f1abf'})],
+
+
 
 	# MARK: Clara
 	'7365de7c': [('info', 'v1.6 -> v2.0: Clara Hair Draw Hash'),  	 (upgrade_hash, {'to': 'bcfb045b'})],
@@ -784,6 +938,18 @@ hash_commands = {
 		})
 	],
 
+	'4c5e718d': [('info', 'v2.2 -> v2.3: Clara Hair Diffuse Hash'),   (upgrade_hash, {'to': 'e730fbcc'})],
+	'7fe8d517': [('info', 'v2.2 -> v2.3: Clara Hair LightMap Hash'),  (upgrade_hash, {'to': '4ecb33c7'})],
+
+	'b6ba0179': [('info', 'v2.2 -> v2.3: Clara Head Diffuse Hash'),   (upgrade_hash, {'to': '64cd257f'})],
+
+	'af43bb7c': [('info', 'v2.2 -> v2.3: Clara BodyA Diffuse Hash'),  (upgrade_hash, {'to': '198363bb'})],
+	'ffd2f41b': [('info', 'v2.2 -> v2.3: Clara BodyA LightMap Hash'), (upgrade_hash, {'to': 'd73982e5'})],
+	'ff7a7e5e': [('info', 'v2.2 -> v2.3: Clara BodyC Diffuse Hash'),  (upgrade_hash, {'to': 'a646bdde'})],
+	'6c866716': [('info', 'v2.2 -> v2.3: Clara BodyC LightMap Hash'), (upgrade_hash, {'to': '6f4c03fe'})],
+
+
+
 	# MARK: DanHeng
 	'de0264c6': [('info', 'v1.4 -> v1.6: DanHeng BodyA LightMap Hash'), (upgrade_hash, {'to': '5e3149d6'})],
 	'f01e58df': [('info', 'v1.6 -> v2.0: DanHeng Head Texcoord Hash'),  (upgrade_hash, {'to': '0c5e8d34'})],
@@ -799,6 +965,16 @@ hash_commands = {
 		})
 	],
 
+	'02394eab': [('info', 'v2.2 -> v2.3: DanHeng Hair Diffuse Hash'),  (upgrade_hash, {'to': '62604aad'})],
+	'98fd88ae': [('info', 'v2.2 -> v2.3: DanHeng Hair LightMap Hash'), (upgrade_hash, {'to': 'e4fd41ae'})],
+
+	'1e764817': [('info', 'v2.2 -> v2.3: DanHeng Head Diffuse Hash'),  (upgrade_hash, {'to': '65a5afa5'})],
+
+	'95212661': [('info', 'v2.2 -> v2.3: DanHeng Body Diffuse Hash'),  (upgrade_hash, {'to': '72b7f37b'})],
+	'5e3149d6': [('info', 'v2.2 -> v2.3: DanHeng Body LightMap Hash'), (upgrade_hash, {'to': '01999151'})],
+
+
+
 	# MARK: DanHengIL
 	'9249f149': [('info', 'v1.4 -> v1.6: DanHengIL BodyA LightMap Hash'), (upgrade_hash, {'to': 'ef65d29c'})],
 	'0ffb8233': [('info', 'v1.6 -> v2.0: DanHengIL Body Texcoord Hash'),  (upgrade_hash, {'to': '0f8da6ba'})],
@@ -811,6 +987,16 @@ hash_commands = {
 			'src_indices': ['0',    '-1'],
 		})
 	],
+
+	'5f6f803e': [('info', 'v2.2 -> v2.3: DanHengIL Hair Diffuse Hash'),  (upgrade_hash, {'to': '779e60a8'})],
+	'ec8baa47': [('info', 'v2.2 -> v2.3: DanHengIL Hair LightMap Hash'), (upgrade_hash, {'to': '41840f8a'})],
+
+	'd64ab9dc': [('info', 'v2.2 -> v2.3: DanHengIL Head Diffuse Hash'),  (upgrade_hash, {'to': 'f1b129e2'})],
+
+	'85486705': [('info', 'v2.2 -> v2.3: DanHengIL Body Diffuse Hash'),  (upgrade_hash, {'to': '9300840e'})],
+	'ef65d29c': [('info', 'v2.2 -> v2.3: DanHengIL Body LightMap Hash'), (upgrade_hash, {'to': 'b0660300'})],
+
+
 
 	# MARK: DrRatio
 	'd1795906': [('info', 'v1.6 -> v2.0: DrRatio Hair Draw Hash'), 	   (upgrade_hash, {'to': 'fbcffe5a'})],
@@ -834,6 +1020,43 @@ hash_commands = {
 		})
 	],
 
+	'fbcffe5a': [('info', 'v2.2 -> v2.3: DrRatio Hair Draw Hash'),     (upgrade_hash, {'to': 'b310931e'})],
+	'5ca10450': [('info', 'v2.2 -> v2.3: DrRatio Hair Position Hash'), (upgrade_hash, {'to': '7a9d0dac'})],
+	'26a8f257': [('info', 'v2.2 -> v2.3: DrRatio Hair Texcoord Hash'), (upgrade_hash, {'to': '650888fc'})],
+	'76d7d3f3': [('info', 'v2.2 -> v2.3: DrRatio Hair IB Hash'),       (upgrade_hash, {'to': '0a520e04'})],
+	'013f4f5d': [('info', 'v2.2 -> v2.3: DrRatio Hair Diffuse Hash'),  (upgrade_hash, {'to': '521b3d2d'})],
+	'8eccb31c': [('info', 'v2.2 -> v2.3: DrRatio Hair LightMap Hash'), (upgrade_hash, {'to': '5a50e9ba'})],
+
+	'29a331d7': [('info', 'v2.2 -> v2.3: DrRatio Head Diffuse Hash'),  (upgrade_hash, {'to': '4c6a99ed'})],
+
+	'd8ae56ba': [('info', 'v2.2 -> v2.3: DrRatio Body Diffuse Hash'),  (upgrade_hash, {'to': 'e80725f3'})],
+	'9fa75d99': [('info', 'v2.2 -> v2.3: DrRatio Body LightMap Hash'), (upgrade_hash, {'to': '4329d27b'})],
+
+
+
+	# MARK: Firefly
+	'81984c7b': [('info', 'v2.2 -> v2.3 (npc/playable): Firefly Hair Diffuse Hash'),  (upgrade_hash, {'to': 'cc46e8e8'})],
+	'2cc928b2': [('info', 'v2.2 -> v2.3 (npc/playable): Firefly Hair LightMap Hash'), (upgrade_hash, {'to': '38ae656e'})],
+
+	'9966e83e': [('info', 'v2.2 -> v2.3 (npc/playable): Firefly Head Diffuse Hash'),  (upgrade_hash, {'to': 'c61c087d'})],
+
+	'8330592e': [('info', 'v2.2 -> v2.3 (npc/playable): Firefly Body Draw Hash'),     (upgrade_hash, {'to': 'da829543'})],
+	'30c7e54e': [('info', 'v2.2 -> v2.3 (npc/playable): Firefly Body Position Hash'), (upgrade_hash, {'to': '69752923'})],
+	'274d9c39': [('info', 'v2.2 -> v2.3 (npc/playable): Firefly Body Texcoord Hash'), (upgrade_hash, {'to': 'f57c4e74'})],
+	'977bcde9': [
+		('info', 'v2.2 -> v2.3 (npc/playable): Firefly Body IB Hash'),
+		(multiply_indexed_section, {
+			'title': 'FireflyBody',
+			'hash': '423c22f1',
+			'trg_indices': ['0', '32547', '66561'],
+			'src_indices': ['0', '32976', '66429'],
+		})
+	],
+	'b5be8f4f': [('info', 'v2.2 -> v2.3 (npc/playable): Firefly Body Diffuse Hash'),  (upgrade_hash, {'to': '70c1071f'})],
+	'04ea14b2': [('info', 'v2.2 -> v2.3 (npc/playable): Firefly Body LightMap Hash'), (upgrade_hash, {'to': '3f9e2b37'})],
+
+
+
 	# MARK: FuXuan
 	'71906b4e': [('info', 'v1.6 -> v2.0: FuXuan Body Texcoord Hash'), (upgrade_hash, {'to': '45b0663d'})],
 	'7d77bdb5': [
@@ -846,6 +1069,35 @@ hash_commands = {
 		})
 	],
 
+	'73b1fe83': [('info', 'v2.2 -> v2.3: FuXuan Hair Texcoord Hash'),     (upgrade_hash, {'to': 'f498555d'})],
+	'df067d4d': [('info', 'v2.2 -> v2.3: FuXuan Hair Diffuse Hash'),      (upgrade_hash, {'to': 'afb05dab'})],
+	'dfc8fb64': [('info', 'v2.2 -> v2.3: FuXuan Hair LightMap Hash'),     (upgrade_hash, {'to': 'd4b96cd1'})],
+
+	'0dd26508': [('info', 'v2.2 -> v2.3: FuXuan Head Diffuse Hash'),      (upgrade_hash, {'to': '0bf30362'})],
+
+	'9e822610': [('info', 'v2.2 -> v2.3: FuXuan BodyA Diffuse Hash'),     (upgrade_hash, {'to': '6455fc0a'})],
+	'50b30274': [('info', 'v2.2 -> v2.3: FuXuan BodyA LightMap Hash'),    (upgrade_hash, {'to': '4ba289bf'})],
+	'0172c74d': [('info', 'v2.2 -> v2.3: FuXuan BodyB Diffuse Hash'),     (upgrade_hash, {'to': '09c78c66'})],
+	'd9171ad6': [('info', 'v2.2 -> v2.3: FuXuan BodyB LightMap Hash'),    (upgrade_hash, {'to': 'ce81f2e6'})],
+	'02291372': [('info', 'v2.2 -> v2.3: FuXuan BodyB StockingMap Hash'), (upgrade_hash, {'to': 'c7b3e7bd'})],
+
+
+
+	# MARK: Gallagher
+	'3464c771': [('info', 'v2.2 -> v2.3: Gallagher Hair Draw Hash'),     (upgrade_hash, {'to': '4ce0e733'})],
+	'e2a6c3dd': [('info', 'v2.2 -> v2.3: Gallagher Hair Position Hash'), (upgrade_hash, {'to': 'b0198c11'})],
+	'8a910c8c': [('info', 'v2.2 -> v2.3: Gallagher Hair Texcoord Hash'), (upgrade_hash, {'to': '9023270b'})],
+	'f5c82676': [('info', 'v2.2 -> v2.3: Gallagher Hair IB Hash'),       (upgrade_hash, {'to': 'e9f3a740'})],
+	'8590504d': [('info', 'v2.2 -> v2.3: Gallagher Hair Diffuse Hash'),  (upgrade_hash, {'to': '0adf3bf9'})],
+	'69d380ac': [('info', 'v2.2 -> v2.3: Gallagher Hair LightMap Hash'), (upgrade_hash, {'to': 'b1f5a889'})],
+
+	'6c2c7e1c': [('info', 'v2.2 -> v2.3: Gallagher Head Diffuse Hash'),  (upgrade_hash, {'to': '81a00110'})],
+
+	'4902ec09': [('info', 'v2.2 -> v2.3: Gallagher Body Diffuse Hash'),  (upgrade_hash, {'to': '585134a8'})],
+	'851877a3': [('info', 'v2.2 -> v2.3: Gallagher Body LightMap Hash'), (upgrade_hash, {'to': '39bf93ba'})],
+
+
+
 	# MARK: Gepard
 	'd62bbd0f': [('info', 'v1.6 -> v2.0: Gepard Body Texcoord Hash'), (upgrade_hash, {'to': '04094d7e'})],
 	'30aa99d6': [
@@ -857,6 +1109,18 @@ hash_commands = {
 			'src_indices': ['0', '31266',     '-1',   '-1'],
 		})
 	],
+
+	'71ba118e': [('info', 'v2.2 -> v2.3: Gepard Hair Diffuse Hash'),   (upgrade_hash, {'to': 'a4d9351f'})],
+	'12718dd9': [('info', 'v2.2 -> v2.3: Gepard Hair LightMap Hash'),  (upgrade_hash, {'to': '00e5e932'})],
+
+	'67bf8ce8': [('info', 'v2.2 -> v2.3: Gepard Head Diffuse Hash'),   (upgrade_hash, {'to': '32a6a2cc'})],
+
+	'19731fb9': [('info', 'v2.2 -> v2.3: Gepard BodyA Diffuse Hash'),  (upgrade_hash, {'to': 'e70c5ef2'})],
+	'da172387': [('info', 'v2.2 -> v2.3: Gepard BodyA LightMap Hash'), (upgrade_hash, {'to': '2ca81203'})],
+	'369fb8ef': [('info', 'v2.2 -> v2.3: Gepard BodyB Diffuse Hash'),  (upgrade_hash, {'to': 'aff5c287'})],
+	'2482636f': [('info', 'v2.2 -> v2.3: Gepard BodyB LightMap Hash'), (upgrade_hash, {'to': '2ba5e966'})],
+
+
 
 	# MARK: Guinaifen
 	'de1f98c0': [('info', 'v1.6 -> v2.0: Guinaifen Body Draw Hash'), 		   (upgrade_hash, {'to': '637ad2db'})],
@@ -882,6 +1146,19 @@ hash_commands = {
 		})
 	],
 
+	'c88f1557': [('info', 'v2.2 -> v2.3: Guinaifen Hair Diffuse Hash'),      (upgrade_hash, {'to': 'fbd7db30'})],
+	'33043521': [('info', 'v2.2 -> v2.3: Guinaifen Hair LightMap Hash'),     (upgrade_hash, {'to': 'c6e13e26'})],
+
+	'7c097e20': [('info', 'v2.2 -> v2.3: Guinaifen Head Diffuse Hash'),      (upgrade_hash, {'to': '81dd54bc'})],
+
+	'e73b9426': [('info', 'v2.2 -> v2.3: Guinaifen BodyA Diffuse Hash'),     (upgrade_hash, {'to': 'ae6de86c'})],
+	'd6a8cff9': [('info', 'v2.2 -> v2.3: Guinaifen BodyA LightMap Hash'),    (upgrade_hash, {'to': '4092649e'})],
+	'47551426': [('info', 'v2.2 -> v2.3: Guinaifen BodyA StockingMap Hash'), (upgrade_hash, {'to': 'caf58d2a'})],
+	'd5d770b0': [('info', 'v2.2 -> v2.3: Guinaifen BodyC Diffuse Hash'),     (upgrade_hash, {'to': 'b710c78e'})],
+	'a72e61d5': [('info', 'v2.2 -> v2.3: Guinaifen BodyC LightMap Hash'),    (upgrade_hash, {'to': '4463cc21'})],
+
+
+
 	# MARK: Hanya
 	'a73510da': [('info', 'v1.6 -> v2.0: Hanya Body Texcoord Hash'), (upgrade_hash, {'to': '69a81bdb'})],
 	'42de1256': [
@@ -893,6 +1170,20 @@ hash_commands = {
 			'src_indices': ['0', '29886',    '-1',    '-1'],
 		})
 	],
+
+	'8bc1d1db': [('info', 'v2.2 -> v2.3: Hanya Hair Diffuse Hash'),      (upgrade_hash, {'to': '7b9e82c5'})],
+	'18503e31': [('info', 'v2.2 -> v2.3: Hanya Hair LightMap Hash'),     (upgrade_hash, {'to': '44c3983d'})],
+
+	'19cae91f': [('info', 'v2.2 -> v2.3: Hanya Head Diffuse Hash'),      (upgrade_hash, {'to': '6d95729a'})],
+
+	'b6dea863': [('info', 'v2.2 -> v2.3: Hanya BodyA Diffuse Hash'),     (upgrade_hash, {'to': '3a1da416'})],
+	'b4d0253c': [('info', 'v2.2 -> v2.3: Hanya BodyA LightMap Hash'),    (upgrade_hash, {'to': '7c08d55d'})],
+	'9233c696': [('info', 'v2.2 -> v2.3: Hanya BodyA StockingMap Hash'), (upgrade_hash, {'to': '162667f6'})],
+	'e7afec9f': [('info', 'v2.2 -> v2.3: Hanya BodyB Diffuse Hash'),     (upgrade_hash, {'to': 'd927b45a'})],
+	'c2817103': [('info', 'v2.2 -> v2.3: Hanya BodyB LightMap Hash'),    (upgrade_hash, {'to': '537979fe'})],
+	'ca76ff40': [('info', 'v2.2 -> v2.3: Hanya BodyB StockingMap Hash'), (upgrade_hash, {'to': '61d0592b'})],
+
+
 
 	# MARK: Herta
 	'93835e8f': [('info', 'v1.6 -> v2.0: Herta Body Draw Hash'),     (upgrade_hash, {'to': 'c08327f8'})],
@@ -908,6 +1199,16 @@ hash_commands = {
 		})
 	],
 
+	'd53e94bd': [('info', 'v2.2 -> v2.3: Herta Hair Diffuse Hash'),  (upgrade_hash, {'to': 'ee995067'})],
+	'84c9c04b': [('info', 'v2.2 -> v2.3: Herta Hair LightMap Hash'), (upgrade_hash, {'to': '515a7733'})],
+
+	'029aeabf': [('info', 'v2.2 -> v2.3: Herta Head Diffuse Hash'),  (upgrade_hash, {'to': 'e116363f'})],
+
+	'01057b08': [('info', 'v2.2 -> v2.3: Herta Body Diffuse Hash'),  (upgrade_hash, {'to': 'e07c10c9'})],
+	'22d89ecd': [('info', 'v2.2 -> v2.3: Herta Body LightMap Hash'), (upgrade_hash, {'to': 'b878ef55'})],
+
+
+
 	# MARK: Himeko
 	'5d98de11': [('info', 'v1.6 -> v2.0: Himeko Body Position Extra Hash'), (upgrade_hash, {'to': '3cfb3645'})],
 	'77cb214c': [('info', 'v1.6 -> v2.0: Himeko Body Texcoord Hash'),       (upgrade_hash, {'to': 'b9e9ae3b'})],
@@ -920,15 +1221,36 @@ hash_commands = {
 			'src_indices': ['0',    '-1', '37002',    '-1'],
 		})
 	],
-	'4747010d': [
-		('info', 'v2.1: Himeko Body Position: Apply Vertex Explosion Fix'),
-		(check_hash_not_in_ini, {'hash': '3cfb3645'}),
+
+	'c08f4727': [('info', 'v2.2 -> v2.3: Himeko Hair Texcoord Hash'),  (upgrade_hash, {'to': 'fa440b40'})],
+	'fc068361': [('info', 'v2.2 -> v2.3: Himeko Hair Diffuse Hash'),   (upgrade_hash, {'to': 'd4634d6f'})],
+	'9adcae2d': [('info', 'v2.2 -> v2.3: Himeko Hair LightMap Hash'),  (upgrade_hash, {'to': 'a700d6b4'})],
+
+	'1acfc83f': [('info', 'v2.2 -> v2.3: Himeko Head Diffuse Hash'),   (upgrade_hash, {'to': '832e3b54'})],
+
+	'f4b0bd6d': [('info', 'v2.2 -> v2.3: Himeko Body Draw Hash'),      (upgrade_hash, {'to': '62d53b1f'})],
+	'4747010d': [('info', 'v2.2 -> v2.3: Himeko Body Position Hash'),  (upgrade_hash, {'to': 'd122877f'})],
+	'b9e9ae3b': [('info', 'v2.2 -> v2.3: Himeko Body Texcoord Hash'),  (upgrade_hash, {'to': '2bf29f1f'})],
+	'e79e4018': [('info', 'v2.2 -> v2.3: Himeko Body IB Hash'),        (upgrade_hash, {'to': '2dc0061c'})],
+	'e2f15a68': [('info', 'v2.2 -> v2.3: Himeko BodyA Diffuse Hash'),  (upgrade_hash, {'to': '6920fe29'})],
+	'27bf0a6a': [('info', 'v2.2 -> v2.3: Himeko BodyA LightMap Hash'), (upgrade_hash, {'to': '520336ef'})],
+	'24e4c5ad': [('info', 'v2.2 -> v2.3: Himeko BodyC Diffuse Hash'),  (upgrade_hash, {'to': 'a769be88'})],
+	'ce965b0d': [('info', 'v2.2 -> v2.3: Himeko BodyC LightMap Hash'), (upgrade_hash, {'to': '094b77c6'})],
+
+
+	'3cfb3645': [('info', 'v2.2 -> v2.3: Himeko Body Position Extra Hash'),  (upgrade_hash, {'to': '5212e2f9'})],
+	'd122877f': [
+		('info', 'v2.3: Himeko Body Position: Apply Vertex Explosion Fix'),
 		(check_hash_not_in_ini, {'hash': '5d98de11'}),
+		(check_hash_not_in_ini, {'hash': '3cfb3645'}),
+		(check_hash_not_in_ini, {'hash': '5212e2f9'}),
 		(multiply_section, {
 			'titles': ['HimekoBodyPosition', 'HimekoBodyPosition_Extra'],
-			'hashes': ['4747010d', '3cfb3645']
+			'hashes': ['d122877f', '5212e2f9']
 		})
 	],
+
+
 
 	# MARK: Hook
 	'0361b6bf': [('info', 'v1.6 -> v2.0: Hook Body Position Hash'), (upgrade_hash, {'to': '9d68704b'})],
@@ -942,6 +1264,16 @@ hash_commands = {
 			'src_indices': ['0',    '-1'],
 		})
 	],
+
+	'fcd7ee7b': [('info', 'v2.2 -> v2.3: Hook Hair Diffuse Hash'),  (upgrade_hash, {'to': 'f1ca01f3'})],
+	'a8e81b3a': [('info', 'v2.2 -> v2.3: Hook Hair LightMap Hash'), (upgrade_hash, {'to': 'db6ff34c'})],
+
+	'd76e33a6': [('info', 'v2.2 -> v2.3: Hook Head Diffuse Hash'),  (upgrade_hash, {'to': '9588db54'})],
+
+	'b8d85743': [('info', 'v2.2 -> v2.3: Hook Body Diffuse Hash'),  (upgrade_hash, {'to': '8ab99329'})],
+	'a49680b5': [('info', 'v2.2 -> v2.3: Hook Body LightMap Hash'), (upgrade_hash, {'to': '4a45ac95'})],
+
+
 
 	# MARK: Huohuo
 	'd9ac0987': [('info', 'v1.6 -> v2.0: Huohuo Body Draw Hash'), 	  (upgrade_hash, {'to': '67a078bd'})],
@@ -957,6 +1289,16 @@ hash_commands = {
 		})
 	],
 
+	'f8d072c0': [('info', 'v2.2 -> v2.3: Huohuo Hair Diffuse Hash'),  (upgrade_hash, {'to': '057f648d'})],
+	'c0f8d106': [('info', 'v2.2 -> v2.3: Huohuo Hair LightMap Hash'), (upgrade_hash, {'to': '772090fc'})],
+
+	'7dbe20be': [('info', 'v2.2 -> v2.3: Huohuo Head Diffuse Hash'),  (upgrade_hash, {'to': '6f1e9080'})],
+
+	'70d3fdb7': [('info', 'v2.2 -> v2.3: Huohuo Body Diffuse Hash'),  (upgrade_hash, {'to': '6598aacd'})],
+	'6e5470a5': [('info', 'v2.2 -> v2.3: Huohuo Body LightMap Hash'), (upgrade_hash, {'to': 'afac01be'})],
+
+
+
 	# MARK: Jingliu
 	'33f9fe71': [('info', 'v1.4 -> v1.6: Jingliu BodyA Diffuse Hash'),  (upgrade_hash, {'to': 'bdbc6dce'})],
 	'67344bd9': [('info', 'v1.4 -> v1.6: Jingliu BodyA LightMap Hash'), (upgrade_hash, {'to': '5f55eaff'})],
@@ -970,6 +1312,16 @@ hash_commands = {
 			'src_indices': ['0',    '-1'],
 		})
 	],
+
+	'1bc1cfa0': [('info', 'v2.2 -> v2.3: Jingliu Hair Diffuse Hash'),  (upgrade_hash, {'to': 'f73f74cb'})],
+	'fbcefb7e': [('info', 'v2.2 -> v2.3: Jingliu Hair LightMap Hash'), (upgrade_hash, {'to': '70ae9680'})],
+
+	'c36ab82e': [('info', 'v2.2 -> v2.3: Jingliu Head Diffuse Hash'),  (upgrade_hash, {'to': '25dd2c46'})],
+
+	'bdbc6dce': [('info', 'v2.2 -> v2.3: Jingliu Body Diffuse Hash'),  (upgrade_hash, {'to': '74370924'})],
+	'5f55eaff': [('info', 'v2.2 -> v2.3: Jingliu Body LightMap Hash'), (upgrade_hash, {'to': 'd3a91ee8'})],
+
+
 
 	# MARK: JingYuan
 	'8f1a29cf': [('info', 'v1.6 -> v2.0: JingYuan Body Texcoord Hash'), (upgrade_hash, {'to': '3423e10d'})],
@@ -996,6 +1348,16 @@ hash_commands = {
 	'ee205a7b': [('info', 'v2.0 -> v2.1: JingYuan Head Position Hash'), (upgrade_hash, {'to': '9d60acea'})],
 	'7c112f46': [('info', 'v2.0 -> v2.1: JingYuan Head Texcoord Hash'), (upgrade_hash, {'to': '20110b85'})],
 	'22147cfe': [('info', 'v2.0 -> v2.1: JingYuan Head IB Hash'),	    (upgrade_hash, {'to': 'a0459b05'})],
+
+	'1da0a14c': [('info', 'v2.2 -> v2.3: JingYuan Hair Diffuse Hash'),   (upgrade_hash, {'to': '1ac1a7fb'})],
+	'97eb13d9': [('info', 'v2.2 -> v2.3: JingYuan Hair LightMap Hash'),  (upgrade_hash, {'to': '9f47fa33'})],
+
+	'7dc71e05': [('info', 'v2.2 -> v2.3: JingYuan Head Diffuse Hash'),   (upgrade_hash, {'to': 'f585da62'})],
+
+	'48c0277a': [('info', 'v2.2 -> v2.3: JingYuan BodyA Diffuse Hash'),  (upgrade_hash, {'to': '26735526'})],
+	'7dfa92fa': [('info', 'v2.2 -> v2.3: JingYuan BodyA LightMap Hash'), (upgrade_hash, {'to': 'd5b2a23a'})],
+	'fd74f596': [('info', 'v2.2 -> v2.3: JingYuan BodyC Diffuse Hash'),  (upgrade_hash, {'to': 'b1b4f581'})],
+	'9fe0c156': [('info', 'v2.2 -> v2.3: JingYuan BodyC LightMap Hash'), (upgrade_hash, {'to': '16a2d8bb'})],
 
 
 
@@ -1028,6 +1390,21 @@ hash_commands = {
 		})
 	],
 
+	'cd60c900': [('info', 'v2.2 -> v2.3: Kafka Hair Texcoord Hash'),     (upgrade_hash, {'to': 'ddbe6ba2'})],
+	'55d258a5': [('info', 'v2.2 -> v2.3: Kafka Hair Diffuse Hash'),      (upgrade_hash, {'to': 'cb354b6b'})],
+	'dc6aaf17': [('info', 'v2.2 -> v2.3: Kafka Hair LightMap Hash'),     (upgrade_hash, {'to': 'e07efe45'})],
+
+	'1d74e2f5': [('info', 'v2.2 -> v2.3: Kafka Head Diffuse Hash'),      (upgrade_hash, {'to': 'cf90e442'})],
+
+	'05ded7f7': [('info', 'v2.2 -> v2.3: Kafka Body Texcoord Hash'),     (upgrade_hash, {'to': 'd14b435e'})],
+	'0da4c671': [('info', 'v2.2 -> v2.3: Kafka BodyA Diffuse Hash'),     (upgrade_hash, {'to': '207c0559'})],
+	'cc322c0f': [('info', 'v2.2 -> v2.3: Kafka BodyA LightMap Hash'),    (upgrade_hash, {'to': '32b5b281'})],
+	'339785c4': [('info', 'v2.2 -> v2.3: Kafka BodyA StockingMap Hash'), (upgrade_hash, {'to': 'fd0ef162'})],
+
+	'e8e2b6da': [('info', 'v2.2 -> v2.3: Kafka BodyC Diffuse Hash'),     (upgrade_hash, {'to': 'c00b55bc'})],
+	'7bd0d180': [('info', 'v2.2 -> v2.3: Kafka BodyC LightMap Hash'),    (upgrade_hash, {'to': '45d15ffb'})],
+
+
 
 	# MARK: Luka
 	'e0c63ed8': [('info', 'v1.4 -> v1.6: Luka BodyA LightMap Hash'), (upgrade_hash, {'to': '31724118'})],
@@ -1056,6 +1433,16 @@ hash_commands = {
 		})
 	],
 
+	'2427134f': [('info', 'v2.2 -> v2.3: Luka Hair Diffuse Hash'),      (upgrade_hash, {'to': '6e34ac83'})],
+	'c6b43fae': [('info', 'v2.2 -> v2.3: Luka Hair LightMap Hash'),     (upgrade_hash, {'to': '6d784dff'})],
+
+	'4d8ef1d8': [('info', 'v2.2 -> v2.3: Luka Head Diffuse Hash'),      (upgrade_hash, {'to': 'e8d263c3'})],
+
+	'3ba22ed5': [('info', 'v2.2 -> v2.3: Luka BodyA Diffuse Hash'),     (upgrade_hash, {'to': 'a026c901'})],
+	'31724118': [('info', 'v2.2 -> v2.3: Luka BodyA LightMap Hash'),    (upgrade_hash, {'to': '1762e62c'})],
+	'73fa89cd': [('info', 'v2.2 -> v2.3: Luka BodyB Diffuse Hash'),     (upgrade_hash, {'to': '00970f33'})],
+	'58749091': [('info', 'v2.2 -> v2.3: Luka BodyB LightMap Hash'),    (upgrade_hash, {'to': '31483729'})],
+
 
 
 	# MARK: Luocha
@@ -1072,6 +1459,18 @@ hash_commands = {
 		})
 	],
 
+	'17542aca': [('info', 'v2.2 -> v2.3: Luocha Hair Diffuse Hash'),      (upgrade_hash, {'to': '9420ae03'})],
+	'dadf8929': [('info', 'v2.2 -> v2.3: Luocha Hair LightMap Hash'),     (upgrade_hash, {'to': 'a7e6fa4f'})],
+
+	'8af54c5d': [('info', 'v2.2 -> v2.3: Luocha Head Diffuse Hash'),      (upgrade_hash, {'to': '664f2f29'})],
+
+	'f9d9adb8': [('info', 'v2.2 -> v2.3: Luocha BodyA Diffuse Hash'),     (upgrade_hash, {'to': '7185fd68'})],
+	'd8dd2b05': [('info', 'v2.2 -> v2.3: Luocha BodyA LightMap Hash'),    (upgrade_hash, {'to': 'eb99eb88'})],
+	'a1fac228': [('info', 'v2.2 -> v2.3: Luocha BodyC Diffuse Hash'),     (upgrade_hash, {'to': '65dec275'})],
+	'ff928485': [('info', 'v2.2 -> v2.3: Luocha BodyC LightMap Hash'),    (upgrade_hash, {'to': '45feb69d'})],
+
+
+
 	# MARK: Lynx
 	'8e595209': [('info', 'v1.6 -> v2.0: Lynx Body Texcoord Hash'), (upgrade_hash, {'to': '52a44eba'})],
 	'b6019d61': [('info', 'v1.6 -> v2.0: Lynx BodyA Diffuse Hash'), (upgrade_hash, {'to': 'e2bad880'})],
@@ -1085,6 +1484,27 @@ hash_commands = {
 		})
 	],
 
+	'6d27e7f2': [('info', 'v2.2 -> v2.3: Lynx Hair Diffuse Hash'),  (upgrade_hash, {'to': 'f4db275c'})],
+	'a874888b': [('info', 'v2.2 -> v2.3: Lynx Hair LightMap Hash'), (upgrade_hash, {'to': '8dc79479'})],
+
+	'3e2ad9b8': [('info', 'v2.2 -> v2.3: Lynx Head Diffuse Hash'),  (upgrade_hash, {'to': 'e5d8fa29'})],
+
+	'52a44eba': [('info', 'v2.2 -> v2.3: Lynx Body Texcoord Hash'), (upgrade_hash, {'to': 'bffadc55'})],
+	'e2bad880': [('info', 'v2.2 -> v2.3: Lynx Body Diffuse Hash'),  (upgrade_hash, {'to': '6c664cc4'})],
+	'6cb92f15': [('info', 'v2.2 -> v2.3: Lynx Body LightMap Hash'), (upgrade_hash, {'to': '540bf4e4'})],
+
+	'09667bf6': [
+		('info', 'v2.3: Lynx Body Position: Apply Vertex Explosion Fix'),
+		(check_hash_not_in_ini, {'hash': '09667bf6'}),
+		(check_hash_not_in_ini, {'hash': '7b23e3e6'}),
+		(multiply_section, {
+			'titles': ['LynxBodyPosition', 'LynxBodyPosition_Extra'],
+			'hashes': ['09667bf6', '7b23e3e6']
+		})
+	],
+
+
+
 	# MARK: March7th
 	'fcef8885': [('info', 'v1.6 -> v2.0: March7th Body Texcoord Hash'), (upgrade_hash, {'to': 'ecf4648c'})],
  	'97ad7623': [
@@ -1097,11 +1517,36 @@ hash_commands = {
 		})
 	],
 
+	'1ed7e59d': [('info', 'v2.2 -> v2.3: March7th Hair Texcoord Hash'),  (upgrade_hash, {'to': '948c4e59'})],
+	'6bd71ad9': [('info', 'v2.2 -> v2.3: March7th Hair Diffuse Hash'),   (upgrade_hash, {'to': 'e299099f'})],
+	'371ca498': [('info', 'v2.2 -> v2.3: March7th Hair LightMap Hash'),  (upgrade_hash, {'to': '89cd27c7'})],
+
+	'2d25d041': [('info', 'v2.2 -> v2.3: March7th Head Diffuse Hash'),   (upgrade_hash, {'to': 'dbbb9b12'})],
+
+	'ecf4648c': [('info', 'v2.2 -> v2.3: March7th Body Texcoord Hash'),  (upgrade_hash, {'to': 'b950fe40'})],
+	'e6b35ac0': [('info', 'v2.2 -> v2.3: March7th BodyA Diffuse Hash'),  (upgrade_hash, {'to': 'a9101746'})],
+	'8c584d30': [('info', 'v2.2 -> v2.3: March7th BodyA LightMap Hash'), (upgrade_hash, {'to': '87f4596d'})],
+	'b57574b3': [('info', 'v2.2 -> v2.3: March7th BodyB Diffuse Hash'),  (upgrade_hash, {'to': 'cada1307'})],
+	'2006cd6a': [('info', 'v2.2 -> v2.3: March7th BodyB LightMap Hash'), (upgrade_hash, {'to': '01f9dbb8'})],
+
+
+
 	# MARK: Misha
 	'0f570849': [('info', 'v2.0 -> v2.1: Misha Head Position Hash'), (upgrade_hash, {'to': 'be8ee647'})],
 	'8aa3d867': [('info', 'v2.0 -> v2.1: Misha Head Texcoord Hash'), (upgrade_hash, {'to': 'ee650b42'})],
- 
 
+	'c49badcb': [('info', 'v2.2 -> v2.3: Misha Hair Draw Hash'),     (upgrade_hash, {'to': 'cdc4b6ac'})],
+	'4b221f10': [('info', 'v2.2 -> v2.3: Misha Hair Position Hash'), (upgrade_hash, {'to': 'af206cba'})],
+	'9980f41b': [('info', 'v2.2 -> v2.3: Misha Hair Texcoord Hash'), (upgrade_hash, {'to': 'e35c9a5a'})],
+	'66e3518a': [('info', 'v2.2 -> v2.3: Misha Hair IB Hash'),       (upgrade_hash, {'to': '08e4fb11'})],
+	'028905ee': [('info', 'v2.2 -> v2.3: Misha Hair Diffuse Hash'),  (upgrade_hash, {'to': '328e0604'})],
+	'8e793185': [('info', 'v2.2 -> v2.3: Misha Hair LightMap Hash'), (upgrade_hash, {'to': 'f66cebd0'})],
+
+	'ee650b42': [('info', 'v2.2 -> v2.3: Misha Head Texcoord Hash'), (upgrade_hash, {'to': '7abbb9e1'})],
+	'958056b6': [('info', 'v2.2 -> v2.3: Misha Head Diffuse Hash'),  (upgrade_hash, {'to': '60707bff'})],
+
+	'157dc503': [('info', 'v2.2 -> v2.3: Misha Body Diffuse Hash'),  (upgrade_hash, {'to': '2b17a6a5'})],
+	'429f63a8': [('info', 'v2.2 -> v2.3: Misha Body LightMap Hash'), (upgrade_hash, {'to': 'ce79ee01'})],
 
 
 
@@ -1127,6 +1572,21 @@ hash_commands = {
 		})
 	],
 
+	'5f44fc0d': [('info', 'v2.2 -> v2.3: Natasha Hair Texcoord Hash'),     (upgrade_hash, {'to': 'a9728390'})],
+	'595464a6': [('info', 'v2.2 -> v2.3: Natasha Hair Diffuse Hash'),      (upgrade_hash, {'to': '08ac31d1'})],
+	'abcc21d1': [('info', 'v2.2 -> v2.3: Natasha Hair LightMap Hash'),     (upgrade_hash, {'to': '260f2286'})],
+
+	'5a9597db': [('info', 'v2.2 -> v2.3: Natasha Head Diffuse Hash'),      (upgrade_hash, {'to': 'b719225a'})],
+
+	'b9b8b2a1': [('info', 'v2.2 -> v2.3: Natasha Body Texcoord Hash'),     (upgrade_hash, {'to': 'f1668e08'})],
+	'209f5c65': [('info', 'v2.2 -> v2.3: Natasha BodyB Diffuse Hash'),     (upgrade_hash, {'to': '6f4ab910'})],
+	'bfd47fe8': [('info', 'v2.2 -> v2.3: Natasha BodyB LightMap Hash'),    (upgrade_hash, {'to': 'fe813491'})],
+	'88be8df6': [('info', 'v2.2 -> v2.3: Natasha BodyB StockingMap Hash'), (upgrade_hash, {'to': 'defb30fc'})],
+	'3bd51af4': [('info', 'v2.2 -> v2.3: Natasha BodyD Diffuse Hash'),     (upgrade_hash, {'to': '519ef69f'})],
+	'2799f499': [('info', 'v2.2 -> v2.3: Natasha BodyD LightMap Hash'),    (upgrade_hash, {'to': '919da513'})],
+	'de96634b': [('info', 'v2.2 -> v2.3: Natasha BodyD StockingMap Hash'), (upgrade_hash, {'to': '236df0fa'})],
+
+
 
 	# MARK: Pela
 	'6148b897': [('info', 'v1.6 -> v2.0: Pela Body Texcoord Hash'), (upgrade_hash, {'to': '77a2f3bf'})],
@@ -1140,6 +1600,17 @@ hash_commands = {
 		})
 	],
 
+	'934172e5': [('info', 'v2.2 -> v2.3: Pela Hair Diffuse Hash'),     (upgrade_hash, {'to': '7fcd70ea'})],
+	'54a11a98': [('info', 'v2.2 -> v2.3: Pela Hair LightMap Hash'),    (upgrade_hash, {'to': '93279a4a'})],
+
+	'0a50c14c': [('info', 'v2.2 -> v2.3: Pela Head Diffuse Hash'),     (upgrade_hash, {'to': '945d61df'})],
+
+	'e02d100c': [('info', 'v2.2 -> v2.3: Pela Body Diffuse Hash'),     (upgrade_hash, {'to': '48fca7f8'})],
+	'ffeb1d46': [('info', 'v2.2 -> v2.3: Pela Body LightMap Hash'),    (upgrade_hash, {'to': '21d34147'})],
+	'8df14d0a': [('info', 'v2.2 -> v2.3: Pela Body StockingMap Hash'), (upgrade_hash, {'to': '883e4c54'})],
+
+
+
 	# MARK: Qingque
 	'3a305670': [('info', 'v1.6 -> v2.0: Qingque Body Texcoord Hash'), (upgrade_hash, {'to': 'cc2db614'})],
   	'daafea36': [
@@ -1151,6 +1622,37 @@ hash_commands = {
 			'src_indices': ['0',    '-1',    '-1', '27765'],
 		})
 	],
+
+	'73fbbace': [('info', 'v2.2 -> v2.3: Qingque Hair Diffuse Hash'),   (upgrade_hash, {'to': 'd9e91d27'})],
+	'48829296': [('info', 'v2.2 -> v2.3: Qingque Hair LightMap Hash'),  (upgrade_hash, {'to': 'ddabcef6'})],
+
+	'c2559faf': [('info', 'v2.2 -> v2.3: Qingque Head Diffuse Hash'),   (upgrade_hash, {'to': '5421f07d'})],
+
+
+	'55e1b1f8': [('info', 'v2.2 -> v2.3: Qingque Body Draw Hash'),      (upgrade_hash, {'to': '311daa47'})],
+	'e6160d98': [('info', 'v2.2 -> v2.3: Qingque Body Position Hash'),  (upgrade_hash, {'to': '82ea1627'})],
+	'cc2db614': [('info', 'v2.2 -> v2.3: Qingque Body Texcoord Hash'),  (upgrade_hash, {'to': 'd97fd893'})],
+	'0a82ceb7': [('info', 'v2.2 -> v2.3: Qingque Body IB Hash'),        (upgrade_hash, {'to': '21856dc2'})],
+
+	'ff995bd0': [('info', 'v2.2 -> v2.3: Qingque BodyA Diffuse Hash'),  (upgrade_hash, {'to': 'd92826b3'})],
+	'2d563efe': [('info', 'v2.2 -> v2.3: Qingque BodyA LightMap Hash'), (upgrade_hash, {'to': 'a85d8219'})],
+	'149c086c': [('info', 'v2.2 -> v2.3: Qingque BodyC Diffuse Hash'),  (upgrade_hash, {'to': '92c74827'})],
+	'2b135afe': [('info', 'v2.2 -> v2.3: Qingque BodyC LightMap Hash'), (upgrade_hash, {'to': 'f57f3990'})],
+
+
+
+	# MARK: Robin
+	'490e6507': [('info', 'v2.2 -> v2.3: Robin HairA Diffuse Hash'),       (upgrade_hash, {'to': 'b7d76947'})],
+	'63aafaed': [('info', 'v2.2 -> v2.3: Robin HairA LightMap Hash'),      (upgrade_hash, {'to': '445abbfc'})],
+ 
+	'07fd3ce1': [('info', 'v2.2 -> v2.3: Robin HeadA Diffuse Hash'),       (upgrade_hash, {'to': '14116af5'})],
+ 
+	'312e2c95': [('info', 'v2.2 -> v2.3: Robin BodyA Diffuse Hash'),       (upgrade_hash, {'to': 'de39f5f2'})],
+	'4c249936': [('info', 'v2.2 -> v2.3: Robin BodyA LightMap Hash'),      (upgrade_hash, {'to': '57ba7e2a'})],
+ 
+	'9e6b5969': [('info', 'v2.2 -> v2.3: Robin BodyB StarrySkyMask Hash'), (upgrade_hash, {'to': 'e5ed0f89'})],
+ 
+
 
 	# MARK: RuanMei
 	'6f3b9090': [('info', 'v1.6 -> v2.0: RuanMei Body Texcoord Hash'),  (upgrade_hash, {'to': '803d3eda'})],
@@ -1165,8 +1667,42 @@ hash_commands = {
 		})
 	],
 
-	# XMARK: Sampo
-	# Nothing
+	'f6491dae': [('info', 'v2.2 -> v2.3: RuanMei HairA Diffuse Hash'),  (upgrade_hash, {'to': '22e8a12f'})],
+	'45e0fe2c': [('info', 'v2.2 -> v2.3: RuanMei HairA LightMap Hash'), (upgrade_hash, {'to': '0198e0df'})],
+ 
+	'b3ddcd02': [('info', 'v2.2 -> v2.3: RuanMei HeadA Diffuse Hash'),  (upgrade_hash, {'to': 'fd3d44f8'})],
+	
+	'fe8145b1': [('info', 'v2.2 -> v2.3: RuanMei BodyA Diffuse Hash'),  (upgrade_hash, {'to': '5387a03e'})],
+	'9b63577a': [('info', 'v2.2 -> v2.3: RuanMei BodyA LightMap Hash'), (upgrade_hash, {'to': '93eec3ab'})],
+
+
+
+	# MARK: Sampo
+	'75824b32': [('info', 'v2.2 -> v2.3: Sampo Hair Draw Hash'),     (upgrade_hash, {'to': '31447b51'})],
+	'e07731c5': [('info', 'v2.2 -> v2.3: Sampo Hair Position Hash'), (upgrade_hash, {'to': '3095786c'})],
+	'529994b6': [('info', 'v2.2 -> v2.3: Sampo Hair Texcoord Hash'), (upgrade_hash, {'to': '5974af55'})],
+	'd2e6ad9b': [('info', 'v2.2 -> v2.3: Sampo Hair IB Hash'),       (upgrade_hash, {'to': '96243edc'})],
+	'ec28a787': [('info', 'v2.2 -> v2.3: Sampo Hair Diffuse Hash'),  (upgrade_hash, {'to': '36d62e76'})],
+	'22c6ec2c': [('info', 'v2.2 -> v2.3: Sampo Hair LightMap Hash'), (upgrade_hash, {'to': '989a13bb'})],
+
+	'3095d3d1': [('info', 'v2.2 -> v2.3: Sampo Head Diffuse Hash'),  (upgrade_hash, {'to': '4c904279'})],
+
+	'a81589e4': [('info', 'v2.2 -> v2.3: Sampo Body Texcoord Hash'), (upgrade_hash, {'to': 'e0274b6f'})],
+   	'3ac42f7d': [
+		('info', 'v2.2 -> v2.3: Sampo Body IB Hash'),
+		(multiply_indexed_section, {
+			'title': 'SampoBody',
+			'hash': '15761df0',
+			'trg_indices': ['0', '20655'],
+			'src_indices': ['0', '20637'],
+		})
+	],
+	'85c01194': [('info', 'v2.2 -> v2.3: Sampo BodyA Diffuse Hash'),  (upgrade_hash, {'to': '297b7f7c'})],
+	'e15ccf04': [('info', 'v2.2 -> v2.3: Sampo BodyA LightMap Hash'), (upgrade_hash, {'to': '1251e25b'})],
+	'92065503': [('info', 'v2.2 -> v2.3: Sampo BodyB Diffuse Hash'),  (upgrade_hash, {'to': '4fd99756'})],
+	'333b2634': [('info', 'v2.2 -> v2.3: Sampo BodyB LightMap Hash'), (upgrade_hash, {'to': '992d119f'})],
+
+
 
 	# MARK: Seele
 	'41943cc6': [('info', 'v1.6 -> v2.0: Seele Body Texcoord Hash'), (upgrade_hash, {'to': 'fe54239f'})],
@@ -1179,6 +1715,20 @@ hash_commands = {
 			'src_indices': ['0',    '-1', '19968',    '-1'],
 		})
 	],
+
+	'8f3bec58': [('info', 'v2.2 -> v2.3: Seele HairA Diffuse Hash'),  (upgrade_hash, {'to': 'ebc707dd'})],
+	'4122931f': [('info', 'v2.2 -> v2.3: Seele HairA LightMap Hash'), (upgrade_hash, {'to': 'da303c25'})],
+ 
+	'ef4ec36c': [('info', 'v2.2 -> v2.3: Seele HeadA Diffuse Hash'),  (upgrade_hash, {'to': '75263a6e'})],
+	
+ 	'fe54239f': [('info', 'v2.2 -> v2.3: Seele Body Texcoord Hash'),  (upgrade_hash, {'to': '17cba38d'})],
+
+	'8daeb19c': [('info', 'v2.2 -> v2.3: Seele BodyA Diffuse Hash'),  (upgrade_hash, {'to': '600c3a12'})],
+	'b06965df': [('info', 'v2.2 -> v2.3: Seele BodyA LightMap Hash'), (upgrade_hash, {'to': '14bb544b'})],
+	'1747ac60': [('info', 'v2.2 -> v2.3: Seele BodyC Diffuse Hash'),  (upgrade_hash, {'to': '8e550df4'})],
+	'32df70e0': [('info', 'v2.2 -> v2.3: Seele BodyC LightMap Hash'), (upgrade_hash, {'to': 'c6db3a14'})],
+
+
 
 	# MARK: Serval
 	'c71fc0d0': [('info', 'v1.6 -> v2.0: Serval Body Position Extra Hash'), (upgrade_hash, {'to': '1bdfe263'})],
@@ -1202,13 +1752,32 @@ hash_commands = {
 		})
 	],
 
+	'59d7157b': [('info', 'v2.2 -> v2.3: Serval HairA Diffuse Hash'),     (upgrade_hash, {'to': '21e4c3cd'})],
+	'86144243': [('info', 'v2.2 -> v2.3: Serval HairA LightMap Hash'),    (upgrade_hash, {'to': '79709858'})],
+ 
+	'd00782c7': [('info', 'v2.2 -> v2.3: Serval HeadA Diffuse Hash'),     (upgrade_hash, {'to': 'afd4f008'})],
+	
+ 	'8d159053': [('info', 'v2.2 -> v2.3: Serval BodyB Diffuse Hash'),     (upgrade_hash, {'to': '1bc2fa5f'})],
+ 	'7e8fa12b': [('info', 'v2.2 -> v2.3: Serval BodyB LightMap Hash'),    (upgrade_hash, {'to': 'a05979e4'})],
+ 	'6efdb42c': [('info', 'v2.2 -> v2.3: Serval BodyB StockingMap Hash'), (upgrade_hash, {'to': 'c7358fb2'})],
+ 	'269745d0': [('info', 'v2.2 -> v2.3: Serval BodyC Diffuse Hash'),     (upgrade_hash, {'to': '5be64601'})],
+ 	'725d36ab': [('info', 'v2.2 -> v2.3: Serval BodyC LightMap Hash'),    (upgrade_hash, {'to': 'c7bd5694'})],
+
 
 	# MARK: Sparkle
+	# SCYLL SAID NOT TO TOUCH HER
 	'28788045': [('info', 'v2.0 -> v2.1: Sparkle Body Texcoord Hash'), (upgrade_hash, {'to': 'd51f3972'})],
 	'74660eca': [('info', 'v2.0 -> v2.1: Sparkle Body IB Hash'),	   (upgrade_hash, {'to': '68121fd3'})],
 	
 	'3c22971b': [('info', 'v2.1 -> v2.2: Sparkle BodyA Diffuse Hash'), (upgrade_hash, {'to': 'fac7d488'})],
 
+	'1d7ed602': [('info', 'v2.2 -> v2.3: Sparkle Hair Diffuse Hash'),  (upgrade_hash, {'to': 'a4f91fac'})],
+	'07b2e4b7': [('info', 'v2.2 -> v2.3: Sparkle Hair LightMap Hash'), (upgrade_hash, {'to': 'df96b015'})],
+
+	'6594fbb2': [('info', 'v2.2 -> v2.3: Sparkle Head Diffuse Hash'),  (upgrade_hash, {'to': '09733ebc'})],
+
+	'fac7d488': [('info', 'v2.2 -> v2.3: Sparkle Body Diffuse Hash'),  (upgrade_hash, {'to': '17999c91'})],
+	'a4974a51': [('info', 'v2.2 -> v2.3: Sparkle Body LightMap Hash'), (upgrade_hash, {'to': 'f806d2e4'})],
 
 
 
@@ -1225,6 +1794,29 @@ hash_commands = {
 			'src_indices': ['0', '64392',    '-1'],
 		})
 	],
+	'd28049f2': [('info', 'v2.2 -> v2.3: SilverWolf Hair Draw Hash'),     (upgrade_hash, {'to': '293abc6c'})],
+	'b2d04673': [('info', 'v2.2 -> v2.3: SilverWolf Hair Position Hash'), (upgrade_hash, {'to': '520314e4'})],
+	'6f9922fe': [('info', 'v2.2 -> v2.3: SilverWolf Hair Texcoord Hash'), (upgrade_hash, {'to': 'b9254611'})],
+	'3608ba80': [('info', 'v2.2 -> v2.3: SilverWolf Hair IB Hash'),       (upgrade_hash, {'to': '91db78c2'})],
+	'56893677': [('info', 'v2.2 -> v2.3: SilverWolf Hair Diffuse Hash'),  (upgrade_hash, {'to': '7c7065ae'})],
+	'dd608b21': [('info', 'v2.2 -> v2.3: SilverWolf Hair LightMap Hash'), (upgrade_hash, {'to': 'cf2cb5b7'})],
+	
+	'd99747d7': [('info', 'v2.2 -> v2.3: SilverWolf Head Diffuse Hash'),  (upgrade_hash, {'to': 'a05a9801'})],
+ 
+	'ab13f8b8': [('info', 'v2.2 -> v2.3: SilverWolf Body Texcoord Hash'), (upgrade_hash, {'to': '6c945131'})],
+ 	'e8f10ab3': [
+		('info', 'v2.2 -> v2.3: SilverWolf Body IB Hash'),
+		(multiply_indexed_section, {
+			'title': 'SilverWolfBody',
+			'hash': '891ecaae',
+			'trg_indices': ['0', '63429', '63543'],
+			'src_indices': ['0', '63549', '63663'],
+		})
+	],
+	'76d6dd31': [('info', 'v2.2 -> v2.3: SilverWolf Body Diffuse Hash'),  (upgrade_hash, {'to': 'b2f97e36'})],
+	'84b3170b': [('info', 'v2.2 -> v2.3: SilverWolf Body LightMap Hash'), (upgrade_hash, {'to': '7b1eface'})],
+
+
 
 	# MARK: Sushang
 	'59a0b558': [('info', 'v1.6 -> v2.0: Sushang Body Texcoord Hash'), (upgrade_hash, {'to': '23dc010c'})],
@@ -1237,6 +1829,18 @@ hash_commands = {
 			'src_indices': ['0',   '-1', '30774',    '-1'],
 		})
 	],
+
+	'95e614e5': [('info', 'v2.2 -> v2.3: Sushang Hair Diffuse Hash'),   (upgrade_hash, {'to': '636dc89e'})],
+	'728565ee': [('info', 'v2.2 -> v2.3: Sushang Hair LightMap Hash'),  (upgrade_hash, {'to': '0e484aa5'})],
+
+	'9d7ea82f': [('info', 'v2.2 -> v2.3: Sushang Head Diffuse Hash'),   (upgrade_hash, {'to': '1897cfee'})],
+ 
+	'e4ccda3f': [('info', 'v2.2 -> v2.3: Sushang BodyA Diffuse Hash'),  (upgrade_hash, {'to': '98507746'})],
+	'653b35cd': [('info', 'v2.2 -> v2.3: Sushang BodyA LightMap Hash'), (upgrade_hash, {'to': '3134e1e4'})],
+	'4724e9c1': [('info', 'v2.2 -> v2.3: Sushang BodyC Diffuse Hash'),  (upgrade_hash, {'to': '79354f80'})],
+	'd2e9d4dc': [('info', 'v2.2 -> v2.3: Sushang BodyC LightMap Hash'), (upgrade_hash, {'to': '1e9893b3'})],
+
+ 
 
 	# MARK: Tingyun
 	'1870a9cb': [('info', 'v1.4 -> v1.6: Tingyun BodyA LightMap Hash'), (upgrade_hash, {'to': '547497fb'})],
@@ -1251,6 +1855,17 @@ hash_commands = {
 			'src_indices': ['0', '16053',    '-1',    '-1', '59736'],
 		})
 	],
+
+	'02a81179': [('info', 'v2.2 -> v2.3: Tingyun Hair Diffuse Hash'),   (upgrade_hash, {'to': 'c4be701a'})],
+	'fa9143b8': [('info', 'v2.2 -> v2.3: Tingyun Hair LightMap Hash'),  (upgrade_hash, {'to': 'f699e83b'})],
+
+	'bdfd3d71': [('info', 'v2.2 -> v2.3: Tingyun Head Diffuse Hash'),   (upgrade_hash, {'to': 'fb95c111'})],
+ 
+	'77ddf35c': [('info', 'v2.2 -> v2.3: Tingyun BodyA Diffuse Hash'),  (upgrade_hash, {'to': 'ed473e73'})],
+	'547497fb': [('info', 'v2.2 -> v2.3: Tingyun BodyA LightMap Hash'), (upgrade_hash, {'to': 'e0fa7d8e'})],
+	'1cbf0500': [('info', 'v2.2 -> v2.3: Tingyun BodyC Diffuse Hash'),  (upgrade_hash, {'to': 'bf7501ab'})],
+	'73fad5f5': [('info', 'v2.2 -> v2.3: Tingyun BodyC LightMap Hash'), (upgrade_hash, {'to': 'fa54a59b'})],
+
 
 
 	# MARK: Topaz
@@ -1274,6 +1889,22 @@ hash_commands = {
 			'hashes': ['2eab6d2d', '71d39d95']
 		})
 	],
+
+	'0dd40a0b': [('info', 'v2.2 -> v2.3: Topaz Hair Draw Hash'),      (upgrade_hash, {'to': 'cc870789'})],
+	'7fac28de': [('info', 'v2.2 -> v2.3: Topaz Hair Position Hash'),  (upgrade_hash, {'to': 'a413be23'})],
+	'b8ec605d': [('info', 'v2.2 -> v2.3: Topaz Hair Texcoord Hash'),  (upgrade_hash, {'to': 'b131f866'})],
+	'f1a4401b': [('info', 'v2.2 -> v2.3: Topaz Hair IB Hash'),        (upgrade_hash, {'to': '32ef4b75'})],
+	'943bf9d3': [('info', 'v2.2 -> v2.3: Topaz Hair Diffuse Hash'),   (upgrade_hash, {'to': '78059f75'})],
+	'67df29ec': [('info', 'v2.2 -> v2.3: Topaz Hair LightMap Hash'),  (upgrade_hash, {'to': '39fd4ba7'})],
+ 
+	'fea9fff4': [('info', 'v2.2 -> v2.3: Topaz Head Diffuse Hash'),   (upgrade_hash, {'to': 'fc521095'})],
+ 
+ 	'436288c9': [('info', 'v2.2 -> v2.3: Topaz Body Texcoord Hash'),  (upgrade_hash, {'to': '4be08333'})],
+ 	'96f5e350': [('info', 'v2.2 -> v2.3: Topaz BodyA Diffuse Hash'),  (upgrade_hash, {'to': '3dfd62b8'})],
+	'6a0ee180': [('info', 'v2.2 -> v2.3: Topaz BodyA LightMap Hash'), (upgrade_hash, {'to': 'b8c954ef'})],
+ 	'68b887db': [('info', 'v2.2 -> v2.3: Topaz BodyC Diffuse Hash'),  (upgrade_hash, {'to': '13be2437'})],
+	'924edd3e': [('info', 'v2.2 -> v2.3: Topaz BodyC LightMap Hash'), (upgrade_hash, {'to': '786f6565'})],
+
 
 
 	# MARK: Welt
@@ -1329,6 +1960,17 @@ hash_commands = {
 		})
 	],
 
+	'78ca8241': [('info', 'v2.2 -> v2.3: Welt Hair Texcoord Hash'),        (upgrade_hash, {'to': '8d2fdd4b'})],
+	'6a8dcc20': [('info', 'v2.2 -> v2.3: Welt Hair Diffuse Hash'),         (upgrade_hash, {'to': '9dd3ae5d'})],
+	'2258cc03': [('info', 'v2.2 -> v2.3: Welt Hair LightMap Hash'),        (upgrade_hash, {'to': 'c6f7c43c'})],
+ 
+	'58db3a4d': [('info', 'v2.2 -> v2.3: Welt Head Diffuse Hash'),         (upgrade_hash, {'to': 'b4d6d5df'})],
+ 
+	'c89a97aa': [('info', 'v2.2 -> v2.3: Welt BodyA Diffuse Hash'),        (upgrade_hash, {'to': 'd318fc3e'})],
+	'b63f51eb': [('info', 'v2.2 -> v2.3: Welt BodyA LightMap Hash'),       (upgrade_hash, {'to': '8cd33bbc'})],
+ 	'5c9711f2': [('info', 'v2.2 -> v2.3: Welt BodyB Diffuse Hash'),        (upgrade_hash, {'to': '948e03bd'})],
+	'3dbb2ae6': [('info', 'v2.2 -> v2.3: Welt BodyB LightMap Hash'),       (upgrade_hash, {'to': 'd77a2807'})],
+
 
 
 	# MARK: Xueyi
@@ -1352,6 +1994,17 @@ hash_commands = {
 			'hashes': ['206b86f0', '8936451b']
 		})
 	],
+
+	'952c20b8': [('info', 'v2.2 -> v2.3: Xueyi Hair Diffuse Hash'),   (upgrade_hash, {'to': '360ebd7f'})],
+	'dbb181aa': [('info', 'v2.2 -> v2.3: Xueyi Hair LightMap Hash'),  (upgrade_hash, {'to': '4d5812b5'})],
+
+	'3c0e2e71': [('info', 'v2.2 -> v2.3: Xueyi Head Diffuse Hash'),   (upgrade_hash, {'to': 'f927a99b'})],
+
+	'ad22f871': [('info', 'v2.2 -> v2.3: Xueyi BodyA Diffuse Hash'),  (upgrade_hash, {'to': 'e2284397'})],
+	'2e328427': [('info', 'v2.2 -> v2.3: Xueyi BodyA LightMap Hash'), (upgrade_hash, {'to': 'a694c7ef'})],
+	'957cf6d9': [('info', 'v2.2 -> v2.3: Xueyi BodyC Diffuse Hash'),  (upgrade_hash, {'to': '89724253'})],
+	'76f171f5': [('info', 'v2.2 -> v2.3: Xueyi BodyC LightMap Hash'), (upgrade_hash, {'to': '91c7faef'})],
+
 
 
 	# MARK: Yanqing
@@ -1425,11 +2078,20 @@ hash_commands = {
 		}),
 	],
 
+	'ea81180d': [('info', 'v2.2 -> v2.3: Yanqing Hair Texcoord Hash'),  (upgrade_hash, {'to': 'e5457b98'})],
+	'14629990': [('info', 'v2.2 -> v2.3: Yanqing Hair Diffuse Hash'),   (upgrade_hash, {'to': '541ba63d'})],
+	'0519a715': [('info', 'v2.2 -> v2.3: Yanqing Hair LightMap Hash'),  (upgrade_hash, {'to': '9639c2cb'})],
+
+	'af6f0aa8': [('info', 'v2.2 -> v2.3: Yanqing Head Diffuse Hash'),   (upgrade_hash, {'to': '80763bb9'})],
+
+	'4e8f9778': [('info', 'v2.2 -> v2.3: Yanqing BodyA Diffuse Hash'),  (upgrade_hash, {'to': 'a41345d3'})],
+	'035f0719': [('info', 'v2.2 -> v2.3: Yanqing BodyA LightMap Hash'), (upgrade_hash, {'to': '2db9f1d6'})],
+
 
 
 	# MARK: Yukong
-	'896a066e': [('info', 'v1.4 -> v1.6: Yukong BodyA LightMap Hash'), (upgrade_hash, {'to': '052766cf'})],
-	'1d185915': [('info', 'v1.6 -> v2.0: Yukong Body Texcoord Hash'),  (upgrade_hash, {'to': 'e5e376b8'})],
+	'896a066e': [('info', 'v1.4 -> v1.6: Yukong BodyA LightMap Hash'),  (upgrade_hash, {'to': '052766cf'})],
+	'1d185915': [('info', 'v1.6 -> v2.0: Yukong Body Texcoord Hash'),   (upgrade_hash, {'to': 'e5e376b8'})],
 	'1df9540b': [
 		('info', 'v1.6 -> v2.0: Yukong Body IB Hash'),
 		(multiply_indexed_section, {
@@ -1439,6 +2101,15 @@ hash_commands = {
 			'src_indices': ['0',    '-1', '60498'],
 		})
 	],
+
+	'08d184a7': [('info', 'v2.2 -> v2.3: Yukong Hair Diffuse Hash'),   (upgrade_hash, {'to': '6fa27e76'})],
+	'11960703': [('info', 'v2.2 -> v2.3: Yukong Hair LightMap Hash'),  (upgrade_hash, {'to': '40baf876'})],
+
+	'b111f58e': [('info', 'v2.2 -> v2.3: Yukong Head Diffuse Hash'),   (upgrade_hash, {'to': 'bbaa4fba'})],
+
+	'b6457bdb': [('info', 'v2.2 -> v2.3: Yukong BodyA Diffuse Hash'),  (upgrade_hash, {'to': '9e0f6958'})],
+	'052766cf': [('info', 'v2.2 -> v2.3: Yukong BodyA LightMap Hash'), (upgrade_hash, {'to': '220a5367'})],
+ 
 
 
 	# MARK: Caelus
@@ -1663,6 +2334,33 @@ hash_commands = {
 		(try_upgrade, {'e3ffef9a'}),
 	],
 
+	'3fc38f8a': [('info', 'v2.2 -> v2.3: Caelus Hair Texcoord Hash'), (upgrade_hash, {'to': 'f4f5c11d'})],
+	'7de7f0c0': [('info', 'v2.2 -> v2.3: Caelus Hair Diffuse Hash'),  (upgrade_hash, {'to': 'fa0975b2'})],
+	'c17e8830': [('info', 'v2.2 -> v2.3: Caelus Hair LightMap Hash'), (upgrade_hash, {'to': 'd75c3881'})],
+
+	'd667a346': [
+		('info', 'v2.3: Caelus Add Head Position Harmony Hash'),
+		(check_hash_not_in_ini, {'hash': '7409246c'}),
+		(multiply_section, {
+			'titles': ['CaelusHeadPosition_DestrPreserv', 'CaelusHeadPosition_Harmony'],
+			'hashes': ['d667a346', '7409246c']
+		})
+	],
+	'7409246c': [
+		('info', 'v2.3: Caelus Add Head Position DestrPreserv Hash'),
+		(check_hash_not_in_ini, {'hash': 'd667a346'}),
+		(multiply_section, {
+			'titles': ['CaelusHeadPosition_Harmony', 'CaelusHeadPosition_DestrPreserv'],
+			'hashes': ['7409246c', 'd667a346']
+		})
+	],
+	'b193e6d8': [('info', 'v2.2 -> v2.3: Caelus Head Diffuse Hash'),  (upgrade_hash, {'to': '21b96557'})],
+
+
+	'28d09106': [('info', 'v2.2 -> v2.3: Caelus Body Diffuse Hash'),  (upgrade_hash, {'to': '3e8e34d5'})],
+	'0fe66c92': [('info', 'v2.2 -> v2.3: Caelus Body LightMap Hash'), (upgrade_hash, {'to': '6194fa1b'})],
+
+
 
 	# MARK: Stelle
 	# 	Skip adding extra sections for v1.6, v2.0, v2.1 Preservation hashes
@@ -1698,9 +2396,52 @@ hash_commands = {
 	'8680469b': [('info', 'v2.1 -> v2.2: Stelle Hair Texcoord Hash'), (upgrade_hash, {'to': 'fe9eaef0'})],
 	'2d9adf2d': [('info', 'v2.1 -> v2.2: Stelle Hair IB Hash'), 	  (upgrade_hash, {'to': '1d62eafb'})],
 
+	'fdb54553': [('info', 'v2.2 -> v2.3: Stelle Hair Diffuse Hash'),  (upgrade_hash, {'to': 'a04fcf6f'})],
+	'ef5586c1': [('info', 'v2.2 -> v2.3: Stelle Hair LightMap Hash'), (upgrade_hash, {'to': '02a9b085'})],
+
+	'1c0a8ff8': [('info', 'v2.2 -> v2.3: Stelle Head Diffuse Hash'),  (upgrade_hash, {'to': '4e98df53'})],
+
+	'a19a8d2c': [('info', 'v2.2 -> v2.3: Stelle Body Diffuse Hash'),  (upgrade_hash, {'to': '78d10c03'})],
+	'5d15eefe': [('info', 'v2.2 -> v2.3: Stelle Body LightMap Hash'), (upgrade_hash, {'to': '69014337'})],
+
+
 	# Comment out the sections with hashes no longer used in v2.2
 	'2dcd5dc0': [('info', 'v2.1: Comment Body Texcoord Hash (Preservation Stelle)'), (comment_sections, {})],
 	'e0d86dc8': [('info', 'v2.1: Comment Body IB Hash (Preservation Stelle)'),		 (comment_sections, {})],
+
+	
+
+	# MARK: Other Entity Fixes
+
+
+
+
+
+	# MARK: Svarog
+	'ae587fb2': [('info', 'v2.2 -> v2.3: Svarog BodyA Diffuse Hash'),  (upgrade_hash, {'to': 'ae37a552'})],
+	'a3acad6f': [('info', 'v2.2 -> v2.3: Svarog BodyA LightMap Hash'), (upgrade_hash, {'to': 'd653a999'})],
+	'10beb640': [('info', 'v2.2 -> v2.3: Svarog BodyA Diffuse Hash'),  (upgrade_hash, {'to': 'e3a7f3fd'})],
+	'69840f72': [('info', 'v2.2 -> v2.3: Svarog BodyA LightMap Hash'), (upgrade_hash, {'to': '4090cc01'})],
+
+
+
+	# MARK: Numby
+	'85d1b3ce': [('info', 'v2.2 -> v2.3: Numby Body DiffuseChScreen Hash'),        (upgrade_hash, {'to': 'e22b4c5e'})],
+	'dab1477d': [('info', 'v2.2 -> v2.3: Numby Body DiffuseOverworldCombat Hash'), (upgrade_hash, {'to': '6cad0819'})],
+	'a313ad5f': [('info', 'v2.2 -> v2.3: Numby Body LightMapChScreen Hash'),       (upgrade_hash, {'to': '07471bf5'})],
+	'807fb688': [('info', 'v2.2 -> v2.3: Numby Body LightMapOverworld Hash'),      (upgrade_hash, {'to': '02644fcc'})],
+	'ef40ac05': [('info', 'v2.2 -> v2.3: Numby Body LightMapCombat Hash'),         (upgrade_hash, {'to': 'cd7acd1a'})],
+
+	'9afaa7d9': [
+		('info', 'v2.1: Numby Body Position: Apply Vertex Explosion Fix'),
+		(check_hash_not_in_ini, {'hash': '394111ad'}),
+		(multiply_section, {
+			'titles': ['NumbyBodyPosition', 'NumbyBodyPosition_Extra'],
+			'hashes': ['9afaa7d9', '394111ad']
+		})
+	],
+
+
 }
 
 # MARK: RUN
