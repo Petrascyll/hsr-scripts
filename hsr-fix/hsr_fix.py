@@ -361,16 +361,56 @@ def remove_indexed_sections(ini_content, hash, jail, *, capture_content=None, ca
 	new_ini_content = ''   # ini with ib sections removed
 	position = -1  		   # First Occurence Deletion Start Position
 
+	all_section_matches = {}
+
 	prev_j = 0
 	section_matches = pattern.finditer(ini_content + '\n[')
 	for section_match in section_matches:
 		if 'match_first_index' not in section_match.group(1):
+			jail['_unindexed_ib_exists'] = True
 			if capture_content:
 				jail[capture_content] = get_critical_content(section_match.group(1))[0]
 		else:
 			critical_content, _, match_first_index = get_critical_content(section_match.group(1))
 			placeholder = '🤍{}🤍'.format(match_first_index)
-			jail[placeholder] = critical_content
+
+			if match_first_index in all_section_matches:
+				# these borked inis are too common...
+				# prompt the user to pick the correct section
+				print('Duplicate IB indexed section found in ini:\n')
+
+				print('Section 1:')
+				print(all_section_matches[match_first_index])
+
+				print('\n\nSection 2:')
+				print(str(section_match.group(1)))
+
+				print()
+				print('Please pick the IB indexed section to be used in the upgrade.')
+				print('(You probably want to pick the section without `ib = null` if it exists)')
+				print('Type `1` to pick the first section or `2` to pick the second section, and')
+				user_choice = input('Press `Enter` to confirm your choice: ')
+
+				try:
+					user_choice = int(user_choice)
+					if user_choice not in [1, 2]:
+						raise Exception()
+				except Exception:
+					raise Exception('Only valid input is `1` or `2`')
+
+				if user_choice == 1:
+					# existing section critical content is what the user wants to keep
+					pass
+				elif user_choice == 2:
+					# overwrite existing section critical content
+					jail[placeholder] = critical_content
+					all_section_matches[match_first_index] = section_match.group(1)
+
+			else:
+				jail[placeholder] = critical_content
+				all_section_matches[match_first_index] = section_match.group(1)
+	
+
 
 		i = section_match.span()[0]
 		if position == -1: position = i
@@ -401,11 +441,20 @@ def swap_hash(ini_content, hash, jail, *, trg_hash):
 
 
 @Command
-def create_new_section(ini_content, hash, jail, *, at_position=-1, capture_position=None, content):
+def create_new_section(ini_content, hash, jail, *, at_position=-1, capture_position=None, jail_condition=None, content):
+
+	# Don't create section if condition must be satisfied but isnt
+	if jail_condition and jail_condition not in jail:
+		return ini_content, jail
+
 	# Relatively slow but it doesn't matter
 	if content[0] == '\n': content = content[1:]
 	content = content.replace('\t', '')
 	for placeholder, value in jail.items():
+		if placeholder.startswith('_'):
+			# conditions are not to be used for substitution
+			continue
+
 		content = content.replace(placeholder, value)
 		if placeholder == at_position: at_position = int(value)
 
@@ -617,7 +666,7 @@ def multiply_section(*, titles, hashes):
 # 	+ A true "multiply_indexed_section" is needed to simplify some character fixes (Stelle/Caelus/Yanqing)
 @Command_Generator
 def multiply_indexed_section(*, title, hash, trg_indices, src_indices):
-	content = f'''
+	unindexed_ib_content = f'''
 		[TextureOverride{title}IB]
 		hash = {hash}
 		🍰
@@ -629,6 +678,7 @@ def multiply_indexed_section(*, title, hash, trg_indices, src_indices):
 		'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
 		'U', 'V', 'W', 'X', 'Y', 'Z'
 	]
+	content = ''
 	for i, (trg_index, src_index) in enumerate(zip(trg_indices, src_indices)):
 		content += '\n'.join([
 			f'[TextureOverride{title}{alpha[i]}]',
@@ -643,6 +693,7 @@ def multiply_indexed_section(*, title, hash, trg_indices, src_indices):
 	return [
 		(remove_indexed_sections, {'capture_content': '🍰', 'capture_position': '🌲'}),
 		(create_new_section, {'at_position': '🌲', 'content': content}),
+		(create_new_section, {'at_position': '🌲', 'content': unindexed_ib_content, 'jail_condition': '_unindexed_ib_exists'}),
 		(try_upgrade, {hash})
 	]
 
