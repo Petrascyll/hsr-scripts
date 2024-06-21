@@ -877,8 +877,8 @@ hash_commands = {
 	
 	'4ce38332': [('info', 'v2.2 -> v2.3: BlackSwan Body Diffuse Hash'),     (upgrade_hash, {'to': 'a5727e55'})],
 	'5527e772': [('info', 'v2.2 -> v2.3: BlackSwan Body LightMap Hash'),    (upgrade_hash, {'to': '7884691d'})],
-	'028b385d': [('info', 'v2.2 -> v2.3: BlackSwan Body StockingMap Hash'), (upgrade_hash, {'to': 'ec1ba003'})],
-
+	'028b385d': [('info', 'v2.2 -> v2.3: BlackSwan Body StockingMap AMD Hash'),   (upgrade_hash, {'to': 'ec1ba003'})],
+	'01f66a63': [('info', 'v2.2 -> v2.3: BlackSwan Body StockingMap NVDIA Hash'), (upgrade_hash, {'to': 'd037ddd6'})],
 
 
 	# MARK: Blade
@@ -2491,6 +2491,25 @@ hash_commands = {
 			'hashes': ['9afaa7d9', '394111ad']
 		})
 	],
+
+
+	# MARK: Weapons
+
+
+	'7ae27f17': [('info', 'v2.2 -> v2.3: Jingliu Sword Diffuse Hash'),  (upgrade_hash, {'to': 'b71e3abe'})],
+	'6acc5dd1': [('info', 'v2.2 -> v2.3: Jingliu Sword LightMap Hash'), (upgrade_hash, {'to': '12fde9bd'})],
+
+
+	'52e8727a': [('info', 'v2.2 -> v2.3: March7th Bow Diffuse Hash'),  (upgrade_hash, {'to': '91804076'})],
+	'f47e4ed8': [('info', 'v2.2 -> v2.3: March7th Bow LightMap Hash'), (upgrade_hash, {'to': 'e91ab48f'})],
+
+
+	'c69a4a5f': [('info', 'v2.2 -> v2.3: Trailblazer Bat Diffuse Hash'),     (upgrade_hash, {'to': 'cac102b9'})],
+	'bc86078f': [('info', 'v2.2 -> v2.3: Trailblazer Bat Diffuse Ult Hash'), (upgrade_hash, {'to': '4a638b94'})],
+	'c7969478': [('info', 'v2.2 -> v2.3: Trailblazer Bat LightMap Hash'),    (upgrade_hash, {'to': 'ff6df1ec'})],
+
+	'0a27a48e': [('info', 'v2.2 -> v2.3: Trailblazer Spear Diffuse Hash'),   (upgrade_hash, {'to': '4cd9ab1d'})],
+	'7ce10d72': [('info', 'v2.2 -> v2.3: Trailblazer Spear LightMap Hash'),  (upgrade_hash, {'to': 'bdae2ad0'})],
 
 
 }
