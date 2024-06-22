@@ -2511,6 +2511,8 @@ hash_commands = {
 	'0a27a48e': [('info', 'v2.2 -> v2.3: Trailblazer Spear Diffuse Hash'),   (upgrade_hash, {'to': '4cd9ab1d'})],
 	'7ce10d72': [('info', 'v2.2 -> v2.3: Trailblazer Spear LightMap Hash'),  (upgrade_hash, {'to': 'bdae2ad0'})],
 
+	'685495d0': [('info', 'v2.2 -> v2.3: Seele Scythe Diffuse Hash'),        (upgrade_hash, {'to': 'ce802067'})],
+	'910e8419': [('info', 'v2.2 -> v2.3: Seele Scythe LightMap Hash'),       (upgrade_hash, {'to': 'cb875574'})],
 
 }
 
