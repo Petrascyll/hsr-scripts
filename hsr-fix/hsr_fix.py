@@ -3,7 +3,7 @@
 # 	thanks to sora_ for help collecting the vertex explosion extra position hashes
 # 	and AGMG discord and everone there for being helpful
 # 
-# HSR Version 2.3 Fix
+# HSR Version 2.4 Fix
 # 	- Updates all outdated HSR character mods from HSRv1.6 up to HSRv2.3
 # 	- Edits Caelus mods to work on both Destruction/Preservation paths.
 # 	- Adds the extra position hash on the mods that need it.
@@ -23,9 +23,9 @@ import traceback
 
 def main():
 	parser = argparse.ArgumentParser(
-		prog="HSR Fix v2.3",
+		prog="HSR Fix v2.4",
 		description=(
-			"- Updates all outdated HSR character mods from HSRv1.6 up to HSRv2.3.\n"
+			"- Updates all outdated HSR character mods from HSRv1.6 up to HSRv2.4.\n"
 			"- Edits Caelus mods to work on both Destruction/Preservation paths.\n"
 			"- Adds the extra position hash on the mods that need it.\n"
 			"- Applies Yanqing Boss fix on the mods that need it.\n"
@@ -702,14 +702,6 @@ hash_commands = {
 	# MARK: Acheron
 	'ca948c6c': [('info', 'v2.1 -> v2.2: Acheron HairA Diffuse Hash'),  (upgrade_hash, {'to': '5ee5cc8d'})],
 	'15cacc23': [('info', 'v2.1 -> v2.2: Acheron HairA LightMap Hash'), (upgrade_hash, {'to': 'ba560779'})],
-	'214bd15a': [
-		('info', 'v2.1: Acheron Body Position: Apply Vertex Explosion Fix'),
-		(check_hash_not_in_ini, {'hash': '7ffc98fa'}),
-		(multiply_section, {
-			'titles': ['AcheronBodyPosition', 'AcheronBodyPosition_Extra'],
-			'hashes': ['214bd15a', '7ffc98fa']
-		})
-	],
 
 	'18425cc1': [('info', 'v2.2 -> v2.3: Acheron Hair Draw Hash'),         (upgrade_hash, {'to': '111d47a6'})],
 	'e775bf51': [('info', 'v2.2 -> v2.3: Acheron Hair Position Hash'),     (upgrade_hash, {'to': '9745dc50'})],
@@ -729,6 +721,21 @@ hash_commands = {
 	'2a42c5e4': [('info', 'v2.2 -> v2.3: Acheron Body LightMap Hash'),     (upgrade_hash, {'to': '1248799e'})],
 	'60de0907': [('info', 'v2.2 -> v2.3: Acheron Body LightMap Ult Hash'), (upgrade_hash, {'to': 'ec57d1b8'})],
 
+	'92bc6d3a': [('info', 'v2.3 -> v2.4: Acheron Body Draw Hash'),           (upgrade_hash, {'to': 'f6023c2b'})],
+	'214bd15a': [('info', 'v2.3 -> v2.4: Acheron Body Position Hash'),       (upgrade_hash, {'to': '45f5804b'})],
+	'7ffc98fa': [('info', 'v2.3 -> v2.4: Acheron Body Position Extra Hash'), (upgrade_hash, {'to': 'bc9d2d77'})],
+	'17e76a6a': [('info', 'v2.3 -> v2.4: Acheron Body Texcoord Hash'),       (upgrade_hash, {'to': 'da5b680e'})],
+	'36536e1b': [('info', 'v2.3 -> v2.4: Acheron Body IB Hash'),             (upgrade_hash, {'to': '6f8c993d'})],
+
+	'45f5804b': [
+		('info', 'v2.4: Acheron Body Position: Apply Vertex Explosion Fix'),
+		(check_hash_not_in_ini, {'hash': 'bc9d2d77'}),
+		(check_hash_not_in_ini, {'hash': '7ffc98fa'}),
+		(multiply_section, {
+			'titles': ['AcheronBodyPosition', 'AcheronBodyPosition_Extra'],
+			'hashes': ['45f5804b', 'bc9d2d77']
+		})
+	],
 
 
 	# MARK: Argenti
@@ -2161,6 +2168,16 @@ hash_commands = {
 	'b6457bdb': [('info', 'v2.2 -> v2.3: Yukong BodyA Diffuse Hash'),  (upgrade_hash, {'to': '9e0f6958'})],
 	'052766cf': [('info', 'v2.2 -> v2.3: Yukong BodyA LightMap Hash'), (upgrade_hash, {'to': '220a5367'})],
  
+
+	# MARK: Yunli
+	'afb1f48c': [
+		('info', 'v2.4: Yunli Body Position: Apply Vertex Explosion Fix'),
+		(check_hash_not_in_ini, {'hash': '8d5695b1'}),
+		(multiply_section, {
+			'titles': ['YunliBodyPosition', 'YunliBodyPosition_Extra'],
+			'hashes': ['afb1f48c', '8d5695b1']
+		})
+	],
 
 
 	# MARK: Caelus
