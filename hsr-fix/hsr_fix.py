@@ -3,11 +3,10 @@
 # 	thanks to sora_ for help collecting the vertex explosion extra position hashes
 # 	and AGMG discord and everone there for being helpful
 # 
-# HSR Version 2.4 Fix
+# HSR Version 2.5 Fix
 # 	- Updates all outdated HSR character mods from HSRv1.6 up to HSRv2.3
 # 	- Edits Caelus mods to work on both Destruction/Preservation paths.
 # 	- Adds the extra position hash on the mods that need it.
-# 	- Applies Yanqing Boss fix on the mods that need it.
 # 
 # .exe Fofo icon source: https://www.hoyolab.com/article/22866306
 # 
@@ -23,12 +22,11 @@ import traceback
 
 def main():
 	parser = argparse.ArgumentParser(
-		prog="HSR Fix v2.4",
+		prog="HSR Fix v2.5",
 		description=(
 			"- Updates all outdated HSR character mods from HSRv1.6 up to HSRv2.4.\n"
 			"- Edits Caelus mods to work on both Destruction/Preservation paths.\n"
 			"- Adds the extra position hash on the mods that need it.\n"
-			"- Applies Yanqing Boss fix on the mods that need it.\n"
 		)
 	)
 
@@ -1092,6 +1090,18 @@ hash_commands = {
 
 
 
+	# MARK: Feixiao
+	'1ef800bc': [
+		('info', 'v2.5: Feixiao Body Position: Apply Vertex Explosion Fix'),
+		(check_hash_not_in_ini, {'hash': '85d02e23'}),
+		(multiply_section, {
+			'titles': ['FeixiaoBodyPosition', 'FeixiaoBodyPosition_Extra'],
+			'hashes': ['1ef800bc', '85d02e23']
+		})
+	],
+
+
+
 	# MARK: Firefly
 	'81984c7b': [('info', 'v2.2 -> v2.3 (npc/playable): Firefly Hair Diffuse Hash'),  (upgrade_hash, {'to': 'cc46e8e8'})],
 	'2cc928b2': [('info', 'v2.2 -> v2.3 (npc/playable): Firefly Hair LightMap Hash'), (upgrade_hash, {'to': '38ae656e'})],
@@ -1276,7 +1286,7 @@ hash_commands = {
 			'title': 'HimekoBody',
 			'hash': 'e79e4018',
 			'trg_indices': ['0', '27381', '37002', '47634'],
-			'src_indices': ['0',    '-1', '37002',    '-1'],
+			'src_indices': ['-1',    '0', '37002',    '-1'],
 		})
 	],
 
@@ -1417,6 +1427,18 @@ hash_commands = {
 	'fd74f596': [('info', 'v2.2 -> v2.3: JingYuan BodyC Diffuse Hash'),  (upgrade_hash, {'to': 'b1b4f581'})],
 	'9fe0c156': [('info', 'v2.2 -> v2.3: JingYuan BodyC LightMap Hash'), (upgrade_hash, {'to': '16a2d8bb'})],
 
+	'baaa1347': [('info', 'v2.4 -> v2.5: JingYuan Body Draw Hash'), 	(upgrade_hash, {'to': '0b529127'})],
+	'095daf27': [('info', 'v2.4 -> v2.5: JingYuan Body Position Hash'), (upgrade_hash, {'to': 'b8a52d47'})],
+	'ebde517e': [('info', 'v2.4 -> v2.5: JingYuan Body Texcoord Hash'), (upgrade_hash, {'to': '9f387461'})],
+	'b2501828': [
+		('info', 'v2.4 -> v2.5: JingYuan Body IB Hash'),
+		(multiply_indexed_section, {
+			'title': 'JingYuanBody',
+			'hash': 'b1191b83',
+			'trg_indices': ['0', '11505', '17778', '53571'],
+			'src_indices': ['0', '11589', '17772', '53565'],
+		})
+	],
 
 
 	# MARK: Kafka
@@ -2089,53 +2111,6 @@ hash_commands = {
 		})
 	],
 
-	'9801327a': [
-		('info', 'v2.1: Yanqing Body Texcoord - Boss Fix'),
-		(check_hash_not_in_ini, {'hash': '188ee3d0'}),
-		(multiply_section, {
-			'titles': ['YanqingBodyTexcoord', 'YanqingBodyTexcoord_Boss'],
-			'hashes': ['9801327a', '188ee3d0']
-		})
-	],
-	'd03803e6': [
-		('info', 'v2.1: Yanqing Body IB - Boss Fix'),
-		(check_hash_not_in_ini, {'hash': '614a27b5'}),
-		(remove_indexed_sections, {'capture_content': '🍰', 'capture_position': '🌲'}),
-		(create_new_section, {
-			'at_position': '🌲',
-			'capture_position': '🌲',
-			'content': '''
-				[TextureOverrideYanqingBodyIB]
-				hash = d03803e6
-				🍰
-
-				[TextureOverrideYanqingBodyA]
-				hash = d03803e6
-				match_first_index = 0
-				🤍0🤍
-
-				[TextureOverrideYanqingBodyB]
-				hash = d03803e6
-				match_first_index = 55983
-				🤍55983🤍
-
-				[TextureOverrideYanqingBodyIB_Boss]
-				hash = 614a27b5
-				🍰
-
-				[TextureOverrideYanqingBodyA_Boss]
-				hash = 614a27b5
-				match_first_index = 0
-				🤍0🤍
-
-				[TextureOverrideYanqingBodyB_Boss]
-				hash = 614a27b5
-				match_first_index = 58596
-				🤍55983🤍
-			'''
-		}),
-	],
-
 	'ea81180d': [('info', 'v2.2 -> v2.3: Yanqing Hair Texcoord Hash'),  (upgrade_hash, {'to': 'e5457b98'})],
 	'14629990': [('info', 'v2.2 -> v2.3: Yanqing Hair Diffuse Hash'),   (upgrade_hash, {'to': '541ba63d'})],
 	'0519a715': [('info', 'v2.2 -> v2.3: Yanqing Hair LightMap Hash'),  (upgrade_hash, {'to': '9639c2cb'})],
@@ -2144,6 +2119,15 @@ hash_commands = {
 
 	'4e8f9778': [('info', 'v2.2 -> v2.3: Yanqing BodyA Diffuse Hash'),  (upgrade_hash, {'to': 'a41345d3'})],
 	'035f0719': [('info', 'v2.2 -> v2.3: Yanqing BodyA LightMap Hash'), (upgrade_hash, {'to': '2db9f1d6'})],
+
+	'5b021ee9': [('info', 'v2.3 -> v2.4: Yanqing Hair Draw Hash'),      (upgrade_hash, {'to': '1534d13e'})],
+	'e5457b98': [('info', 'v2.3 -> v2.4: Yanqing Hair Texcoord Hash'),  (upgrade_hash, {'to': '3ef427fd'})],
+	'e0d7d970': [('info', 'v2.3 -> v2.4: Yanqing Hair Position Hash'),  (upgrade_hash, {'to': 'a2ee2b45'})],
+
+	'994d55ab': [('info', 'v2.3 -> v2.4: Yanqing Head Position Hash'),  (upgrade_hash, {'to': '5bc1537b'})],
+	'ed7ceec2': [('info', 'v2.3 -> v2.4: Yanqing Head Draw Hash'),      (upgrade_hash, {'to': '04782d92'})],
+	'738ba58f': [('info', 'v2.3 -> v2.4: Yanqing Head Texcoord Hash'),  (upgrade_hash, {'to': '6d99c7e0'})],
+	'6ae41f8f': [('info', 'v2.3 -> v2.4: Yanqing Head IB Hash'),        (upgrade_hash, {'to': '9e0449af'})],
 
 
 
