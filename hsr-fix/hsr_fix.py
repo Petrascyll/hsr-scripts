@@ -1734,6 +1734,8 @@ hash_commands = {
  
 	'9e6b5969': [('info', 'v2.2 -> v2.3: Robin BodyB StarrySkyMask Hash'), (upgrade_hash, {'to': 'e5ed0f89'})],
  
+	'ef273dac': [('info', 'v2.5 -> v2.6: Robin Body Position Hash'),      (upgrade_hash, {'to': '22e9e92a'})],
+	'43c5c007': [('info', 'v2.5 -> v2.6: Robin Body Texcoord Hash'),      (upgrade_hash, {'to': 'a65193dc'})],
 
 
 	# MARK: RuanMei
