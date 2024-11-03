@@ -3,8 +3,8 @@
 # 	thanks to sora_ for help collecting the vertex explosion extra position hashes
 # 	and AGMG discord and everone there for being helpful
 # 
-# HSR Version 2.5 Fix
-# 	- Updates all outdated HSR character mods from HSRv1.6 up to HSRv2.3
+# HSR Version 2.6 Fix
+# 	- Updates all outdated HSR character mods from HSRv1.6 up to HSRv2.6
 # 	- Edits Caelus mods to work on both Destruction/Preservation paths.
 # 	- Adds the extra position hash on the mods that need it.
 # 
@@ -22,9 +22,9 @@ import traceback
 
 def main():
 	parser = argparse.ArgumentParser(
-		prog="HSR Fix v2.5",
+		prog="HSR Fix v2.6",
 		description=(
-			"- Updates all outdated HSR character mods from HSRv1.6 up to HSRv2.4.\n"
+			"- Updates all outdated HSR character mods from HSRv1.6 up to HSRv2.6.\n"
 			"- Edits Caelus mods to work on both Destruction/Preservation paths.\n"
 			"- Adds the extra position hash on the mods that need it.\n"
 		)
