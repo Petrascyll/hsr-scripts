@@ -54,7 +54,9 @@ def main():
 # SHAMELESSLY (mostly) ripped from genshin fix script
 def process_folder(folder_path):
 	for filename in os.listdir(folder_path):
-		if filename.upper().startswith('DISABLED') or 'DESKTOP' in filename.upper():
+		if 'DESKTOP' in filename.upper():
+			continue
+		if filename.upper().startswith('DISABLED') and filename.endswith('.ini'):
 			continue
 
 		filepath = os.path.join(folder_path, filename)
