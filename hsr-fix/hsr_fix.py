@@ -3,8 +3,8 @@
 # 	thanks to sora_ for help collecting the vertex explosion extra position hashes
 # 	and AGMG discord and everone there for being helpful
 # 
-# HSR Version 2.6 Fix
-# 	- Updates all outdated HSR character mods from HSRv1.6 up to HSRv2.6
+# HSR Version 2.7 Fix
+# 	- Updates all outdated HSR character mods from HSRv1.6 up to HSRv2.7
 # 	- Edits Caelus mods to work on both Destruction/Preservation paths.
 # 	- Adds the extra position hash on the mods that need it.
 # 
@@ -22,9 +22,9 @@ import traceback
 
 def main():
 	parser = argparse.ArgumentParser(
-		prog="HSR Fix v2.6",
+		prog="HSR Fix v2.7",
 		description=(
-			"- Updates all outdated HSR character mods from HSRv1.6 up to HSRv2.6.\n"
+			"- Updates all outdated HSR character mods from HSRv1.6 up to HSRv2.7.\n"
 			"- Edits Caelus mods to work on both Destruction/Preservation paths.\n"
 			"- Adds the extra position hash on the mods that need it.\n"
 		)
@@ -1629,6 +1629,12 @@ hash_commands = {
 
 	'157dc503': [('info', 'v2.2 -> v2.3: Misha Body Diffuse Hash'),  (upgrade_hash, {'to': '2b17a6a5'})],
 	'429f63a8': [('info', 'v2.2 -> v2.3: Misha Body LightMap Hash'), (upgrade_hash, {'to': 'ce79ee01'})],
+
+
+
+	# MARK: Moze
+	'dda2bf74': [('info', 'v2.6 -> v2.7: Moze Head Texcoord Hash'), (upgrade_hash, {'to': '1a604ceb'})],
+	'7439f4c8': [('info', 'v2.6 -> v2.7: Moze Body Texcoord Hash'), (upgrade_hash, {'to': '84a33c6c'})],
 
 
 
