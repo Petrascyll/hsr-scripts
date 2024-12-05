@@ -1908,6 +1908,18 @@ hash_commands = {
 
 
 
+	# MARK: Sunday
+	'acc75a16': [
+		('info', 'v2.7: Sunday Body Position: Apply Vertex Explosion Fix'),
+		(check_hash_not_in_ini, {'hash': '2e207a71'}),
+		(multiply_section, {
+			'titles': ['SundayBodyPosition', 'SundayBodyPosition_Extra'],
+			'hashes': ['acc75a16', '2e207a71']
+		})
+	],
+
+
+
 	# MARK: Sushang
 	'59a0b558': [('info', 'v1.6 -> v2.0: Sushang Body Texcoord Hash'), (upgrade_hash, {'to': '23dc010c'})],
  	'd765c517': [
