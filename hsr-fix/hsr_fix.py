@@ -3,8 +3,8 @@
 # 	thanks to sora_ for help collecting the vertex explosion extra position hashes
 # 	and AGMG discord and everone there for being helpful
 # 
-# HSR Version 2.7 Fix
-# 	- Updates all outdated HSR character mods from HSRv1.6 up to HSRv2.7
+# HSR Version 3.0 Fix
+# 	- Updates all outdated HSR character mods from HSRv1.6 up to HSRv3.0
 # 	- Edits Caelus mods to work on both Destruction/Preservation paths.
 # 	- Adds the extra position hash on the mods that need it.
 # 
@@ -22,9 +22,9 @@ import traceback
 
 def main():
 	parser = argparse.ArgumentParser(
-		prog="HSR Fix v2.7",
+		prog="HSR Fix v3.0",
 		description=(
-			"- Updates all outdated HSR character mods from HSRv1.6 up to HSRv2.7.\n"
+			"- Updates all outdated HSR character mods from HSRv1.6 up to HSRv3.0.\n"
 			"- Edits Caelus mods to work on both Destruction/Preservation paths.\n"
 			"- Adds the extra position hash on the mods that need it.\n"
 		)
@@ -149,7 +149,10 @@ class Ini():
 
 			if is_Command_Generator(command):
 				print('{}-{}'.format('\t'*tabs, command.__name__))
-				generated_commands = command(**kwargs)
+				if command.__name__ in ('upgrade_else_comment', 'upgrade_else_comment_indexed'):
+					generated_commands = command(self, **kwargs)
+				else:
+					generated_commands = command(**kwargs)
 				sub_jail = self.execute(hash, generated_commands, jail, tabs=tabs+1)
 				jail.update(sub_jail)
 
@@ -219,6 +222,11 @@ class Ini():
 			print('No changes applied')
 		print()
 
+	def has_hash(self, hash):
+		return (
+			(hash in self.hashes) or
+			(hash in self.done_hashes)
+		)
 
 # MARK: Regex
 # Match the whole section (under the first group) that contains
@@ -385,26 +393,40 @@ def remove_indexed_sections(ini_content, hash, jail, *, capture_content=None, ca
 				print('\n\nSection 2:')
 				print(str(section_match.group(1)))
 
-				print()
-				print('Please pick the IB indexed section to be used in the upgrade.')
-				print('(You probably want to pick the section without `ib = null` if it exists)')
-				print('Type `1` to pick the first section or `2` to pick the second section, and')
-				user_choice = input('Press `Enter` to confirm your choice: ')
-
-				try:
-					user_choice = int(user_choice)
-					if user_choice not in [1, 2]:
-						raise Exception()
-				except Exception:
-					raise Exception('Only valid input is `1` or `2`')
-
-				if user_choice == 1:
-					# existing section critical content is what the user wants to keep
-					pass
-				elif user_choice == 2:
+				# automatically pick Section 2
+				if 'ib = null' in all_section_matches[match_first_index]:
 					# overwrite existing section critical content
+					print('Removed Section 1')
 					jail[placeholder] = critical_content
 					all_section_matches[match_first_index] = section_match.group(1)
+
+				# automatically pick Section 1
+				elif 'ib = null' in str(section_match.group(1)):
+					# existing section critical content is what the user wants to keep
+					print('Removed Section 2')
+					pass
+				
+				else:
+					print()
+					print('Please pick the IB indexed section to be used in the upgrade.')
+					print('(You probably want to pick the section without `ib = null` if it exists)')
+					print('Type `1` to pick the first section or `2` to pick the second section, and')
+					user_choice = input('Press `Enter` to confirm your choice: ')
+
+					try:
+						user_choice = int(user_choice)
+						if user_choice not in [1, 2]:
+							raise Exception()
+					except Exception:
+						raise Exception('Only valid input is `1` or `2`')
+
+					if user_choice == 1:
+						# existing section critical content is what the user wants to keep
+						pass
+					elif user_choice == 2:
+						# overwrite existing section critical content
+						jail[placeholder] = critical_content
+						all_section_matches[match_first_index] = section_match.group(1)
 
 			else:
 				jail[placeholder] = critical_content
@@ -696,6 +718,29 @@ def multiply_indexed_section(*, title, hash, trg_indices, src_indices):
 		(create_new_section, {'at_position': '🌲', 'content': unindexed_ib_content, 'jail_condition': '_unindexed_ib_exists'}),
 		(try_upgrade, {hash})
 	]
+
+@Command_Generator
+def upgrade_else_comment(ini: Ini, *, missing, hash):
+	return [
+		(comment_sections, {})
+		if any([ini.has_hash(h) for h in missing])
+		else (upgrade_hash, {'to': hash})
+	]
+
+@Command_Generator
+def upgrade_else_comment_indexed(ini: Ini, *, missing, hash, title, trg_indices, src_indices):
+	return [
+		(comment_sections, {})
+		if any([ini.has_hash(h) for h in missing])
+		else (multiply_indexed_section, {
+			'title': title,
+			'hash': hash,
+			'trg_indices': trg_indices,
+			'src_indices': src_indices,
+		})
+	]
+
+
 
 
 hash_commands = {
@@ -1030,6 +1075,7 @@ hash_commands = {
 
 	'95212661': [('info', 'v2.2 -> v2.3: DanHeng Body Diffuse Hash'),  (upgrade_hash, {'to': '72b7f37b'})],
 	'5e3149d6': [('info', 'v2.2 -> v2.3: DanHeng Body LightMap Hash'), (upgrade_hash, {'to': '01999151'})],
+	'01999151': [('info', 'v2.7 -> v3.0: DanHeng Body LightMap Hash'), (upgrade_hash, {'to': '75400c84'})],
 
 
 
@@ -1917,6 +1963,8 @@ hash_commands = {
 			'hashes': ['acc75a16', '2e207a71']
 		})
 	],
+	'7220563b': [('info', 'v2.7 -> v3.0: Sunday Body Diffuse Hash'), (upgrade_hash, {'to': '5b056989'})],
+	'9ec5fcc5': [('info', 'v2.7 -> v3.0: Sunday Body Diffuse Hash'), (upgrade_hash, {'to': '09fdcc99'})],
 
 
 
@@ -2187,247 +2235,80 @@ hash_commands = {
 
 
 	# MARK: Caelus
-	'0bbb3448': [
-		('info', 'v1.5 -> v1.6: Body Texcoord Hash (Caelus)'),
-		# certain mod kept outdated hash sections active with the uptodate hash sections
-		# don't upgrade the hash if so
-		(check_hash_not_in_ini, {'hash': '97c34928'}),
-		(check_hash_not_in_ini, {'hash': '44da446d'}),
-		(multiply_section, {
-			'titles': ['CaelusBodyTexcoord_Destruction', 'CaelusBodyTexcoord_Preservation'],
-			'hashes': ['97c34928', '44da446d']
-		})
-	],
-	'97c34928': [
-		('info', 'v2.2: Body Texcoord Hash (Destruction Caelus)'),
-		(check_hash_not_in_ini, {'hash': '44da446d'}),
-		(multiply_section, {
-			'titles': ['CaelusBodyTexcoord_Destruction', 'CaelusBodyTexcoord_Preservation'],
-			'hashes': ['97c34928', '44da446d']
-		})
-	],
-	'44da446d': [
-		('info', 'v2.2: Body Texcoord Hash (Preservation Caelus)'),
-		(check_hash_not_in_ini, {'hash': '77933d6e'}),
-		(multiply_section, {
-			'titles': ['CaelusBodyTexcoord_Preservation', 'CaelusBodyTexcoord_Harmony'],
-			'hashes': ['44da446d', '77933d6e']
-		})
-	],
-	'77933d6e': [
-		('info', 'v2.2: Body Texcoord Hash (Harmony Caelus)'),
-		(check_hash_not_in_ini, {'hash': '97c34928'}),
-		(multiply_section, {
-			'titles': ['CaelusBodyTexcoord_Harmony', 'CaelusBodyTexcoord_Destruction'],
-			'hashes': ['77933d6e', '97c34928']
-		})
-	],
+	'0bbb3448': [('info', 'v1.5 -> v1.6: Caelus Body Texcoord Hash [Destruction]'),  (upgrade_hash, {'to': '97c34928'})],
+	'97c34928': [('info', 'v2.7 -> v3.0: Caelus Body Texcoord Hash [Shared]'),       (upgrade_hash, {'to': '15be9519'})],
+	'44da446d': [('info', 'v1.6: Caelus Body Texcoord Hash [Preservation]'),         (upgrade_else_comment, {'missing': ['0bbb3448', '97c34928', '15be9519'], 'hash': '0bbb3448'})],
+	'77933d6e': [('info', 'v2.2: Caelus Body Texcoord Hash [Harmony]'),              (upgrade_else_comment, {'missing': ['0bbb3448', '97c34928', '15be9519'], 'hash': '0bbb3448'})],
+
+	'f00b031a': [('info', 'v2.7 -> v3.0: Caelus Body Blend Hash'),                   (upgrade_hash, {'to': '2baba62a'})],
+	'9e7ca423': [('info', 'v1.6: Caelus Body Blend Hash [Preservation]'),            (upgrade_else_comment, {'missing': ['f00b031a', '2baba62a'], 'hash': 'f00b031a'})],
+	'560052ad': [('info', 'v2.2: Caelus Body Blend Hash [Harmony]'),                 (upgrade_else_comment, {'missing': ['f00b031a', '2baba62a'], 'hash': 'f00b031a'})],
+
+	'91022b8f': [('info', 'v2.7 -> v3.0: Caelus Body Draw Hash'),                    (upgrade_hash, {'to': '33342be6'})],
+	'22f597ef': [('info', 'v2.7 -> v3.0: Caelus Body Position Hash'),                (upgrade_hash, {'to': '80c39786'})],
 
 	'fd65164c': [
-		('info', 'v1.5 -> v1.6: Body IB Hash (Caelus)'),
-		# see above comment :teriderp:
-		(check_hash_not_in_ini, {'hash': 'e3ffef9a'}),
-		(check_hash_not_in_ini, {'hash': 'a270e292'}),
-		(remove_indexed_sections, {'capture_content': '🍰', 'capture_position': '🌲'}),
-		(create_new_section, {
-			'at_position': '🌲',
-			'capture_position': '🌲',
-			'content': '''
-				[TextureOverrideCaelusBodyIB_Destruction]
-				hash = e3ffef9a
-				🍰
-
-				[TextureOverrideCaelusBodyA_Destruction]
-				hash = e3ffef9a
-				match_first_index = 0
-				ib = null
-
-				[TextureOverrideCaelusBodyB_Destruction]
-				hash = e3ffef9a
-				match_first_index = 38178
-				🤍0🤍
-
-			'''
-		}),
-		(create_new_section, {
-			'at_position': '🌲',
-			'content': '''
-				[TextureOverrideCaelusBodyIB_Preservation]
-				hash = a270e292
-				🍰
-
-				[TextureOverrideCaelusBodyA_Preservation]
-				hash = a270e292
-				match_first_index = 0
-				ib = null
-
-				[TextureOverrideCaelusBodyB_Preservation]
-				hash = a270e292
-				match_first_index = 37674
-				🤍0🤍
-			'''
-		}),
-		(try_upgrade, {'e3ffef9a', 'a270e292'}),
+		('info', 'v1.5 -> v1.6: Caelus Body IB Hash [Destruction]'),
+		(multiply_indexed_section, {
+			'title': 'CaelusBody',
+			'hash': 'e3ffef9a',
+			'trg_indices': [ '0', '38178'],
+			'src_indices': ['-1', '0'],
+		})
 	],
-
-	# From Destruction hash: Add Preservation Path hashes if its missing
 	'e3ffef9a': [
-		('info', 'v2.2: Body IB Hash (Caelus Destruction)'),
-		(check_hash_not_in_ini, {'hash': 'a270e292'}),
-		(remove_indexed_sections, {'capture_content': '🍰', 'capture_position': '🌲'}),
-		(create_new_section, {
-			'at_position': '🌲',
-			'capture_position': '🌲',
-			'content': '''
-				[TextureOverrideCaelusBodyIB_Destruction]
-				hash = e3ffef9a
-				🍰
-
-				[TextureOverrideCaelusBodyA_Destruction]
-				hash = e3ffef9a
-				match_first_index = 0
-				🤍0🤍
-
-				[TextureOverrideCaelusBodyB_Destruction]
-				hash = e3ffef9a
-				match_first_index = 38178
-				🤍38178🤍
-
-			'''
-		}),
-		(create_new_section, {
-			'at_position': '🌲',
-			'content': '''
-				[TextureOverrideCaelusBodyIB_Preservation]
-				hash = a270e292
-				🍰
-
-				[TextureOverrideCaelusBodyA_Preservation]
-				hash = a270e292
-				match_first_index = 0
-				🤍0🤍
-
-				[TextureOverrideCaelusBodyB_Preservation]
-				hash = a270e292
-				match_first_index = 37674
-				🤍38178🤍
-			'''
-		}),
-		(try_upgrade, {'a270e292'}),
+		('info', 'v2.7 -> v3.0: Caelus Body IB Hash'),
+		(multiply_indexed_section, {
+			'title': 'CaelusBody',
+			'hash': '825f79f5',
+			'trg_indices': ['0', '37659'],
+			'src_indices': ['0', '38178'],
+		})
 	],
-
-	# From Preservation hash: Add Harmony Path hashes if its missing
 	'a270e292': [
-		('info', 'v2.2: Body IB Hash (Caelus Preservation)'),
-		(check_hash_not_in_ini, {'hash': '89fcb592'}),
-		(remove_indexed_sections, {'capture_content': '🍰', 'capture_position': '🌲'}),
-		(create_new_section, {
-			'at_position': '🌲',
-			'content': '''
-				[TextureOverrideCaelusBodyIB_Preservation]
-				hash = a270e292
-				🍰
-
-				[TextureOverrideCaelusBodyA_Preservation]
-				hash = a270e292
-				match_first_index = 0
-				🤍0🤍
-
-				[TextureOverrideCaelusBodyB_Preservation]
-				hash = a270e292
-				match_first_index = 37674
-				🤍37674🤍
-
-			'''
-		}),
-		(create_new_section, {
-			'at_position': '🌲',
-			'capture_position': '🌲',
-			'content': '''
-				[TextureOverrideCaelusBodyIB_Harmony]
-				hash = 89fcb592
-				🍰
-
-				[TextureOverrideCaelusBodyA_Harmony]
-				hash = 89fcb592
-				match_first_index = 0
-				🤍0🤍
-
-				[TextureOverrideCaelusBodyB_Harmony]
-				hash = 89fcb592
-				match_first_index = 39330
-				🤍37674🤍
-			'''
-		}),
-		(try_upgrade, {'89fcb592'}),
+		('info', 'v1.6: Caelus Body IB Hash [Preservation]'),
+		(upgrade_else_comment_indexed, {
+			'missing': ['fd65164c', 'e3ffef9a', '825f79f5'],
+			'title': 'CaelusBody',
+			'hash': '825f79f5',
+			'trg_indices': ['0', '37659'],
+			'src_indices': ['0', '37674'],
+		})
 	],
-
-	# From Harmony hash: Add Destruction Path hashes if its missing
 	'89fcb592': [
-		('info', 'v2.2: Body IB Hash (Caelus Preservation)'),
-		(check_hash_not_in_ini, {'hash': 'e3ffef9a'}),
-		(remove_indexed_sections, {'capture_content': '🍰', 'capture_position': '🌲'}),
-		(create_new_section, {
-			'at_position': '🌲',
-			'capture_position': '🌲',
-			'content': '''
-				[TextureOverrideCaelusBodyIB_Harmony]
-				hash = 89fcb592
-				🍰
-
-				[TextureOverrideCaelusBodyA_Harmony]
-				hash = 89fcb592
-				match_first_index = 0
-				🤍0🤍
-
-				[TextureOverrideCaelusBodyB_Harmony]
-				hash = 89fcb592
-				match_first_index = 39330
-				🤍39330🤍
-
-			'''
-		}),
-		(create_new_section, {
-			'at_position': '🌲',
-			'content': '''
-				[TextureOverrideCaelusBodyIB_Destruction]
-				hash = e3ffef9a
-				🍰
-
-				[TextureOverrideCaelusBodyA_Destruction]
-				hash = e3ffef9a
-				match_first_index = 0
-				🤍0🤍
-
-				[TextureOverrideCaelusBodyB_Destruction]
-				hash = e3ffef9a
-				match_first_index = 38178
-				🤍39330🤍
-			'''
-		}),
-		(try_upgrade, {'e3ffef9a'}),
+		('info', 'v2.2: Caelus Body IB Hash [Harmony]'),
+		(upgrade_else_comment_indexed, {
+			'missing': ['fd65164c', 'e3ffef9a', '825f79f5'],
+			'title': 'CaelusBody',
+			'hash': '825f79f5',
+			'trg_indices': ['0', '37659'],
+			'src_indices': ['0', '39330'],
+		})
 	],
+
 
 	'3fc38f8a': [('info', 'v2.2 -> v2.3: Caelus Hair Texcoord Hash'), (upgrade_hash, {'to': 'f4f5c11d'})],
 	'7de7f0c0': [('info', 'v2.2 -> v2.3: Caelus Hair Diffuse Hash'),  (upgrade_hash, {'to': 'fa0975b2'})],
 	'c17e8830': [('info', 'v2.2 -> v2.3: Caelus Hair LightMap Hash'), (upgrade_hash, {'to': 'd75c3881'})],
 
-	'd667a346': [
-		('info', 'v2.3: Caelus Add Head Position Harmony Hash'),
-		(check_hash_not_in_ini, {'hash': '7409246c'}),
-		(multiply_section, {
-			'titles': ['CaelusHeadPosition_DestrPreserv', 'CaelusHeadPosition_Harmony'],
-			'hashes': ['d667a346', '7409246c']
+
+	'd667a346': [('info', 'v2.7 -> v3.0: Caelus Head Position Hash'),   (upgrade_hash, {'to': '87f2f3ce'})],
+	'7409246c': [('info', 'v2.3: Caelus Head Position Hash [Harmony]'), (upgrade_else_comment, {'missing': ['d667a346', '87f2f3ce'], 'hash': '87f2f3ce'})],
+
+	'5df1352e': [('info', 'v2.7 -> v3.0: Caelus Head Draw Hash'),     (upgrade_hash, {'to': '1c71430d'})],
+	'abdc67e6': [('info', 'v2.7 -> v3.0: Caelus Head Blend Hash'),    (upgrade_hash, {'to': '3576ec0a'})],
+	'9108c1f1': [('info', 'v2.7 -> v3.0: Caelus Head Texcoord Hash'), (upgrade_hash, {'to': '714d71d0'})],
+	'c1004613': [
+		('info', 'v2.7 -> v3.0: Caelus Head IB Hash'),
+		(multiply_indexed_section, {
+			'title': 'CaelusHead',
+			'hash': '70f89eb8',
+			'trg_indices': ['0', '13734'],
+			'src_indices': ['0', '13716'],
 		})
 	],
-	'7409246c': [
-		('info', 'v2.3: Caelus Add Head Position DestrPreserv Hash'),
-		(check_hash_not_in_ini, {'hash': 'd667a346'}),
-		(multiply_section, {
-			'titles': ['CaelusHeadPosition_Harmony', 'CaelusHeadPosition_DestrPreserv'],
-			'hashes': ['7409246c', 'd667a346']
-		})
-	],
+
+
 	'b193e6d8': [('info', 'v2.2 -> v2.3: Caelus Head Diffuse Hash'),  (upgrade_hash, {'to': '21b96557'})],
 
 
