@@ -1152,7 +1152,9 @@ hash_commands = {
 
 	# MARK: Firefly
 	'81984c7b': [('info', 'v2.2 -> v2.3 (npc/playable): Firefly Hair Diffuse Hash'),  (upgrade_hash, {'to': 'cc46e8e8'})],
+	'cc46e8e8': [('info', 'v2.7 -> v3.0: Firefly Hair Diffuse Hash'),                 (upgrade_hash, {'to': 'e0eeaba2'})],
 	'2cc928b2': [('info', 'v2.2 -> v2.3 (npc/playable): Firefly Hair LightMap Hash'), (upgrade_hash, {'to': '38ae656e'})],
+	'38ae656e': [('info', 'v2.7 -> v3.0: Firefly Hair LightMap Hash'),                (upgrade_hash, {'to': '61303c45'})],
 
 	'9966e83e': [('info', 'v2.2 -> v2.3 (npc/playable): Firefly Head Diffuse Hash'),  (upgrade_hash, {'to': 'c61c087d'})],
 
@@ -1170,6 +1172,11 @@ hash_commands = {
 	],
 	'b5be8f4f': [('info', 'v2.2 -> v2.3 (npc/playable): Firefly Body Diffuse Hash'),  (upgrade_hash, {'to': '70c1071f'})],
 	'04ea14b2': [('info', 'v2.2 -> v2.3 (npc/playable): Firefly Body LightMap Hash'), (upgrade_hash, {'to': '3f9e2b37'})],
+
+
+
+	# MARK: Firefly SAM
+	'602bb9eb': [('info', 'v2.7 -> v3.0: Firefly SAM Ult Diffuse Hash'), (upgrade_hash, {'to': '006c5936'})],
 
 
 
@@ -2358,6 +2365,15 @@ hash_commands = {
 
 	'a19a8d2c': [('info', 'v2.2 -> v2.3: Stelle Body Diffuse Hash'),  (upgrade_hash, {'to': '78d10c03'})],
 	'5d15eefe': [('info', 'v2.2 -> v2.3: Stelle Body LightMap Hash'), (upgrade_hash, {'to': '69014337'})],
+
+	'6949f854': [
+		('info', 'v3.0: Stelle Body Position: Apply Vertex Explosion Fix'),
+		(check_hash_not_in_ini, {'hash': 'e9e81b6c'}),
+		(multiply_section, {
+			'titles': ['StelleBodyPosition', 'StelleBodyPosition_Extra'],
+			'hashes': ['6949f854', 'e9e81b6c']
+		})
+	],
 
 
 	# Comment out the sections with hashes no longer used in v2.2
