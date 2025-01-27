@@ -2253,6 +2253,15 @@ hash_commands = {
 
 	'91022b8f': [('info', 'v2.7 -> v3.0: Caelus Body Draw Hash'),                    (upgrade_hash, {'to': '33342be6'})],
 	'22f597ef': [('info', 'v2.7 -> v3.0: Caelus Body Position Hash'),                (upgrade_hash, {'to': '80c39786'})],
+	'80c39786': [
+		('info', 'v3.0: Caelus Body Position: Apply Vertex Explosion Fix'),
+		(check_hash_not_in_ini, {'hash': 'b3935566'}),
+		(multiply_section, {
+			'titles': ['CaelusBodyPosition', 'CaelusBodyPosition_Extra'],
+			'hashes': ['80c39786', 'b3935566']
+		})
+	],
+
 
 	'fd65164c': [
 		('info', 'v1.5 -> v1.6: Caelus Body IB Hash [Destruction]'),
